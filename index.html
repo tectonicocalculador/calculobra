@@ -1,241 +1,97 @@
-Copiá y pegá TODO este código dentro del editor:
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CalculObra</title>
-
+<title>CalculObra v1.2</title>
 <style>
-
-*{
-box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
-}
-
-body{
-margin:0;
-background:#f4f4f4;
-}
-
-header{
-background:#f7c600;
-padding:25px;
-text-align:center;
-font-size:34px;
-font-weight:bold;
-box-shadow:0 3px 10px rgba(0,0,0,.2);
-}
-
-.sub{
-text-align:center;
-margin-top:5px;
-color:#555;
-}
-
-.container{
-
-max-width:700px;
-margin:35px auto;
-padding:20px;
-
-}
-
-.card{
-
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-
-}
-
-input{
-
-width:100%;
-padding:16px;
-margin-top:10px;
-margin-bottom:20px;
-font-size:20px;
-border-radius:10px;
-border:1px solid #ccc;
-
-}
-
-button{
-
-width:100%;
-padding:18px;
-background:#f7c600;
-border:none;
-border-radius:10px;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-
-}
-
-button:hover{
-
-background:#e5b800;
-
-}
-
-.resultado{
-
-display:none;
-margin-top:30px;
-
-}
-
-.material{
-
-background:#fafafa;
-padding:18px;
-margin-bottom:15px;
-border-left:8px solid #f7c600;
-border-radius:10px;
-
-}
-
-.valor{
-
-font-size:30px;
-font-weight:bold;
-margin-top:10px;
-
-}
-
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f4f4f4}
+header{background:#f7c600;padding:20px;text-align:center;font-size:32px;font-weight:bold;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.sub{font-size:16px;color:#555}
+.container{max-width:1400px;margin:30px auto;padding:20px;display:flex;gap:30px;align-items:flex-start}
+.izquierda{flex:1}
+.derecha{width:420px;background:#fff;padding:20px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+.card{background:#fff;padding:25px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+input,button{width:100%;padding:14px;margin:8px 0 18px;font-size:18px}
+button{background:#f7c600;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+.material{background:#fafafa;border-left:6px solid #f7c600;padding:12px;margin:10px 0;border-radius:8px}
+.valor{font-size:24px;font-weight:bold}
+.resultado{display:none}
+.item{border-bottom:1px solid #ddd;padding:10px 0}
+.item button{width:auto;padding:6px 10px;font-size:14px;background:#d9534f;color:#fff}
 </style>
-
 </head>
-
 <body>
-
-<header>
-
-CalculObra
-
-<div class="sub">
-
-Calculadora de Materiales
-
-</div>
-
-</header>
+<header>CalculObra<div class="sub">Calculadora de Materiales</div></header>
 
 <div class="container">
-
+<div class="izquierda">
 <div class="card">
-
 <h2>Mampostería</h2>
 
 <label>Largo del muro (m)</label>
-
 <input id="largo" type="number" step="0.01">
 
 <label>Alto del muro (m)</label>
-
 <input id="alto" type="number" step="0.01">
 
-<button onclick="calcular()">
-
-CALCULAR
-
-</button>
+<button onclick="calcular()">CALCULAR</button>
 
 <div class="resultado" id="resultado">
-
-<div class="material">
-
-Área
-
-<div class="valor" id="area"></div>
-
+<div class="material">Área<div class="valor" id="area"></div></div>
+<div class="material">🧱 Ladrillos<div class="valor" id="ladrillos"></div></div>
+<div class="material">⚪ Cemento<div class="valor" id="cemento"></div></div>
+<div class="material">🟤 Cal<div class="valor" id="cal"></div></div>
+<div class="material">🟡 Arena<div class="valor" id="arena"></div></div>
+</div>
+</div>
 </div>
 
-<div class="material">
-
-🧱 Ladrillos
-
-<div class="valor" id="ladrillos"></div>
-
+<div class="derecha">
+<h2>📋 Lista de Materiales</h2>
+<div id="lista">Todavía no hay cálculos.</div>
+<h3>Total acumulado</h3>
+<div id="totales">Ladrillos: 0<br>Cemento: 0 kg<br>Cal: 0 kg<br>Arena: 0 m³</div>
 </div>
-
-<div class="material">
-
-⚪ Cemento
-
-<div class="valor" id="cemento"></div>
-
-</div>
-
-<div class="material">
-
-🟤 Cal
-
-<div class="valor" id="cal"></div>
-
-</div>
-
-<div class="material">
-
-🟡 Arena
-
-<div class="valor" id="arena"></div>
-
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 <script>
-
+let historial=[];
 function calcular(){
-
-let largo=parseFloat(document.getElementById("largo").value);
-
-let alto=parseFloat(document.getElementById("alto").value);
-
-if(isNaN(largo)||isNaN(alto)){
-
-alert("Ingrese largo y alto");
-
-return;
-
+ let largo=parseFloat(largo.value),alto=parseFloat(alto.value);
+ if(isNaN(largo)||isNaN(alto)){alert("Ingrese largo y alto");return;}
+ let area=largo*alto;
+ let item={
+  area:area,
+  ladrillos:Math.ceil(area*60),
+  cemento:area*7.5,
+  cal:area*7.3,
+  arena:area*0.035
+ };
+ historial.push(item);
+ actualizar();
+ document.getElementById("resultado").style.display="block";
+ areaEl.innerHTML=item.area.toFixed(2)+" m²";
+ ladrillos.innerHTML=item.ladrillos+" unidades";
+ cemento.innerHTML=item.cemento.toFixed(1)+" kg ("+Math.ceil(item.cemento/25)+" bolsas)";
+ cal.innerHTML=item.cal.toFixed(1)+" kg ("+Math.ceil(item.cal/25)+" bolsas)";
+ arena.innerHTML=item.arena.toFixed(3)+" m³";
 }
-
-let area=largo*alto;
-
-let ladrillos=Math.ceil(area*60);
-
-let cemento=area*7.5;
-
-let cal=area*7.3;
-
-let arena=area*0.035;
-
-document.getElementById("resultado").style.display="block";
-
-document.getElementById("area").innerHTML=area.toFixed(2)+" m²";
-
-document.getElementById("ladrillos").innerHTML=ladrillos+" unidades";
-
-document.getElementById("cemento").innerHTML=cemento.toFixed(1)+" kg ("+Math.ceil(cemento/25)+" bolsas)";
-
-document.getElementById("cal").innerHTML=cal.toFixed(1)+" kg ("+Math.ceil(cal/25)+" bolsas)";
-
-document.getElementById("arena").innerHTML=arena.toFixed(3)+" m³";
-
+const areaEl=document.getElementById("area");
+function actualizar(){
+ let html="";
+ let t={l:0,c:0,ca:0,a:0};
+ historial.forEach((i,n)=>{
+   t.l+=i.ladrillos;t.c+=i.cemento;t.ca+=i.cal;t.a+=i.arena;
+   html+=`<div class="item"><b>Mampostería ${n+1}</b><br>${i.area.toFixed(2)} m²<br>
+   <button onclick="eliminar(${n})">Eliminar</button></div>`;
+ });
+ if(!html) html="Todavía no hay cálculos.";
+ lista.innerHTML=html;
+ totales.innerHTML=`Ladrillos: ${t.l}<br>Cemento: ${t.c.toFixed(1)} kg<br>Cal: ${t.ca.toFixed(1)} kg<br>Arena: ${t.a.toFixed(3)} m³`;
 }
-
+function eliminar(i){historial.splice(i,1);actualizar();}
 </script>
-
 </body>
-
 </html>
