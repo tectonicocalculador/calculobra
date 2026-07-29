@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CalculObra | TECTONICO</title>
 
 <link rel="stylesheet" href="style.css">
@@ -13,71 +16,61 @@
 
 <header class="topbar">
 
-<div class="logo">
-<h1>TECTONICO</h1>
-<p>CalculObra v0.1</p>
-</div>
+    <div class="logo">
+        <h1>TECTONICO</h1>
+        <p>CalculObra v0.2</p>
+    </div>
 
 </header>
 
-
 <div class="app">
 
-<aside class="sidebar">
+    <!-- ESPACIOS -->
 
-<h2>🏗 Partes de la obra</h2>
+    <aside class="sidebar">
 
-<div id="partes">
+        <h2>Espacios</h2>
 
-<div class="parte activa">
-🟢 Medianera Norte
-</div>
+        <div id="espacios"></div>
 
-<div class="parte">
-🟡 Cocina
-</div>
+        <button id="nuevoEspacio">
+            ➕ Nuevo Espacio
+        </button>
 
-<div class="parte">
-⚪ Baño
-</div>
+    </aside>
 
-</div>
+    <!-- TAREAS -->
 
-<button id="nuevaParte">
-+ Nueva Parte
-</button>
+    <main class="contenido">
 
-</aside>
+        <h2>Tareas</h2>
 
+        <div id="tareas">
 
-<main class="contenido">
+            <p>Seleccione un espacio.</p>
 
-<h2>Tareas</h2>
+        </div>
 
-<div id="tareas">
+    </main>
 
-<p>Seleccione una parte de la obra.</p>
+    <!-- COMPUTO -->
 
-</div>
+    <aside class="materiales">
 
-</main>
+        <h2>Cómputo</h2>
 
+        <div id="listaMateriales">
 
-<aside class="materiales">
+            <p>No hay materiales.</p>
 
-<h2>Materiales</h2>
+        </div>
 
-<div id="listaMateriales">
-
-<p>No hay materiales calculados.</p>
-
-</div>
-
-</aside>
+    </aside>
 
 </div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
