@@ -1,5 +1,5 @@
 // =======================================
-// CALCULOBRA v0.2
+// CALCULOBRA v0.3
 // Gestión de Espacios
 // =======================================
 
@@ -13,13 +13,13 @@ let espacioSeleccionado = null;
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const boton = document.getElementById("nuevaParte");
+    const boton = document.getElementById("nuevoEspacio");
 
-    if (boton) {
-        boton.addEventListener("click", agregarEspacio);
-    }
+    boton.addEventListener("click", agregarEspacio);
 
     renderizarEspacios();
+
+    renderizarTareas();
 
 });
 
@@ -35,6 +35,8 @@ function agregarEspacio(){
 
     espacios.push({
 
+        id: Date.now(),
+
         nombre: nombre,
 
         estado: "⚪",
@@ -48,14 +50,12 @@ function agregarEspacio(){
 }
 
 // =======================================
-// MOSTRAR ESPACIOS
+// RENDERIZAR ESPACIOS
 // =======================================
 
 function renderizarEspacios(){
 
-    const contenedor = document.getElementById("partes");
-
-    if(!contenedor) return;
+    const contenedor = document.getElementById("espacios");
 
     contenedor.innerHTML = "";
 
@@ -69,9 +69,19 @@ function renderizarEspacios(){
             div.classList.add("activa");
         }
 
-        div.innerHTML = `${espacio.estado} ${espacio.nombre}`;
+        div.innerHTML = `
+            <span>${espacio.estado} ${espacio.nombre}</span>
+        `;
 
-        div.onclick = () => selecionarEspacio(indice);
+        div.addEventListener("click",()=>{
+
+            espacioSeleccionado = indice;
+
+            renderizarEspacios();
+
+            renderizarTareas();
+
+        });
 
         contenedor.appendChild(div);
 
@@ -80,30 +90,12 @@ function renderizarEspacios(){
 }
 
 // =======================================
-// SELECCIONAR ESPACIO
-// =======================================
-
-function selecionarEspacio(indice){
-
-    espacioSeleccionado = indice;
-
-    renderizarEspacios();
-
-    renderizarTareas();
-
-}
-
-// =======================================
-// MOSTRAR TAREAS
+// TAREAS
 // =======================================
 
 function renderizarTareas(){
 
     const contenedor = document.getElementById("tareas");
-
-    if(!contenedor) return;
-
-    contenedor.innerHTML = "";
 
     if(espacioSeleccionado === null){
 
@@ -115,26 +107,20 @@ function renderizarTareas(){
 
     }
 
-    const tareas = espacios[espacioSeleccionado].tareas;
+    const espacio = espacios[espacioSeleccionado];
 
-    if(tareas.length === 0){
+    contenedor.innerHTML = `
 
-        contenedor.innerHTML = `
-            <p>Este espacio todavía no tiene tareas.</p>
-        `;
+        <h3>${espacio.nombre}</h3>
 
-        return;
+        <button id="nuevaTarea">
+            ➕ Nueva tarea
+        </button>
 
-    }
+        <p style="margin-top:20px;color:#777;">
+            Este espacio todavía no tiene tareas.
+        </p>
 
-    tareas.forEach((tarea)=>{
-
-        contenedor.innerHTML += `
-            <div class="tarea">
-                ${tarea}
-            </div>
-        `;
-
-    });
+    `;
 
 }
