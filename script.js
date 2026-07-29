@@ -1,82 +1,140 @@
-// ================================
-// CALCULOBRA v0.1
-// ================================
+// =======================================
+// CALCULOBRA v0.2
+// Gestión de Espacios
+// =======================================
 
-const partes = [
-    {
-        nombre: "Medianera Norte",
-        estado: "🟢"
-    },
-    {
-        nombre: "Cocina",
-        estado: "🟡"
-    },
-    {
-        nombre: "Baño",
-        estado: "⚪"
-    }
-];
+const espacios = [];
 
-// ================================
-// AGREGAR NUEVA PARTE
-// ================================
+let espacioSeleccionado = null;
+
+// =======================================
+// INICIO
+// =======================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const boton = document.getElementById("nuevaParte");
 
     if (boton) {
-
-        boton.addEventListener("click", agregarParte);
-
+        boton.addEventListener("click", agregarEspacio);
     }
+
+    renderizarEspacios();
 
 });
 
-function agregarParte(){
+// =======================================
+// AGREGAR ESPACIO
+// =======================================
 
-    const nombre = prompt("Nombre de la nueva parte de la obra");
+function agregarEspacio(){
+
+    const nombre = prompt("Nombre del espacio");
 
     if(!nombre) return;
 
-    partes.push({
+    espacios.push({
 
-        nombre:nombre,
+        nombre: nombre,
 
-        estado:"⚪"
+        estado: "⚪",
+
+        tareas: []
 
     });
 
-    renderizarPartes();
+    renderizarEspacios();
 
 }
 
-// ================================
-// MOSTRAR PARTES
-// ================================
+// =======================================
+// MOSTRAR ESPACIOS
+// =======================================
 
-function renderizarPartes(){
+function renderizarEspacios(){
 
     const contenedor = document.getElementById("partes");
 
     if(!contenedor) return;
 
-    contenedor.innerHTML="";
+    contenedor.innerHTML = "";
 
-    partes.forEach((parte)=>{
+    espacios.forEach((espacio, indice)=>{
 
-        contenedor.innerHTML += `
+        const div = document.createElement("div");
 
-        <div class="parte">
+        div.className = "parte";
 
-            ${parte.estado} ${parte.nombre}
+        if(indice === espacioSeleccionado){
+            div.classList.add("activa");
+        }
 
-        </div>
+        div.innerHTML = `${espacio.estado} ${espacio.nombre}`;
 
-        `;
+        div.onclick = () => selecionarEspacio(indice);
+
+        contenedor.appendChild(div);
 
     });
 
 }
 
-document.addEventListener("DOMContentLoaded",renderizarPartes);
+// =======================================
+// SELECCIONAR ESPACIO
+// =======================================
+
+function selecionarEspacio(indice){
+
+    espacioSeleccionado = indice;
+
+    renderizarEspacios();
+
+    renderizarTareas();
+
+}
+
+// =======================================
+// MOSTRAR TAREAS
+// =======================================
+
+function renderizarTareas(){
+
+    const contenedor = document.getElementById("tareas");
+
+    if(!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    if(espacioSeleccionado === null){
+
+        contenedor.innerHTML = `
+            <p>Seleccione un espacio.</p>
+        `;
+
+        return;
+
+    }
+
+    const tareas = espacios[espacioSeleccionado].tareas;
+
+    if(tareas.length === 0){
+
+        contenedor.innerHTML = `
+            <p>Este espacio todavía no tiene tareas.</p>
+        `;
+
+        return;
+
+    }
+
+    tareas.forEach((tarea)=>{
+
+        contenedor.innerHTML += `
+            <div class="tarea">
+                ${tarea}
+            </div>
+        `;
+
+    });
+
+}
