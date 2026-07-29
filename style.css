@@ -1,8 +1,195 @@
+/* ====== RESET ====== */
 
-body{font-family:Arial,sans-serif;margin:0;background:#f3f3f3}
-header{background:#f7c600;text-align:center;padding:20px}
-.container{display:flex;gap:20px;max-width:1200px;margin:20px auto}
-.left,.right{background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.left{flex:1}.right{width:350px}
-input,button{width:100%;padding:10px;margin:8px 0}
-.item{border-bottom:1px solid #ddd;padding:8px 0}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:#eef2f7;
+    color:#1f2937;
+}
+
+/* ====== BARRA SUPERIOR ====== */
+
+.topbar{
+    height:70px;
+    background:#1f2937;
+    color:white;
+    display:flex;
+    align-items:center;
+    padding:0 30px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+.logo h1{
+    font-size:24px;
+    margin-bottom:3px;
+}
+
+.logo p{
+    font-size:13px;
+    opacity:.8;
+}
+
+/* ====== LAYOUT ====== */
+
+.app{
+    display:grid;
+    grid-template-columns:280px 1fr 350px;
+    gap:20px;
+    padding:25px;
+    height:calc(100vh - 70px);
+}
+
+/* ====== PANELES ====== */
+
+.sidebar,
+.contenido,
+.materiales{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:22px;
+
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+
+    overflow:auto;
+
+}
+
+.sidebar h2,
+.contenido h2,
+.materiales h2{
+
+    margin-bottom:20px;
+
+}
+
+/* ====== PARTES ====== */
+
+.parte{
+
+    background:#f5f7fb;
+
+    padding:12px 15px;
+
+    border-radius:10px;
+
+    margin-bottom:10px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.parte:hover{
+
+    background:#e8eef8;
+
+}
+
+.parte.activa{
+
+    background:#dbeafe;
+
+    border-left:5px solid #2563eb;
+
+}
+
+/* ===== BOTON ===== */
+
+button{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+button:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ===== CONTENIDO ===== */
+
+#tareas{
+
+    background:#f8fafc;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    min-height:250px;
+
+}
+
+/* ===== MATERIALES ===== */
+
+#listaMateriales{
+
+    background:#f8fafc;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    min-height:300px;
+
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:1000px){
+
+.app{
+
+grid-template-columns:1fr;
+
+height:auto;
+
+}
+
+.materiales{
+
+order:3;
+
+}
+
+.sidebar{
+
+order:1;
+
+}
+
+.contenido{
+
+order:2;
+
+}
+
+}
