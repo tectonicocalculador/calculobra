@@ -3,26 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CalculObra</title>
-<link rel="stylesheet" href="style.css">
+<title>CalculObra | TECTONICO</title>
+
+<link rel="stylesheet" href="estilo.css">
+
 </head>
+
 <body>
-<header><h1>CalculObra</h1><p>Calculadora de Materiales</p></header>
-<div class="container">
-<div class="left">
-<h2>Mampostería</h2>
-<label>Largo (m)</label><input id="largo" type="number">
-<label>Alto (m)</label><input id="alto" type="number">
-<button onclick="calcular()">Calcular</button>
-<div id="resultado"></div>
+
+<header class="topbar">
+
+<div class="logo">
+<h1>TECTONICO</h1>
+<p>CalculObra v0.1</p>
 </div>
-<div class="right">
-<h2>Lista de materiales</h2>
-<div id="lista"></div>
-<h3>Total acumulado</h3>
-<div id="totales"></div>
+
+</header>
+
+
+<div class="app">
+
+<aside class="sidebar">
+
+<h2>🏗 Partes de la obra</h2>
+
+<div id="partes">
+
+<div class="parte activa">
+🟢 Medianera Norte
 </div>
+
+<div class="parte">
+🟡 Cocina
 </div>
+
+<div class="parte">
+⚪ Baño
+</div>
+
+</div>
+
+<button id="nuevaParte">
++ Nueva Parte
+</button>
+
+</aside>
+
+
+<main class="contenido">
+
+<h2>Tareas</h2>
+
+<div id="tareas">
+
+<p>Seleccione una parte de la obra.</p>
+
+</div>
+
+</main>
+
+
+<aside class="materiales">
+
+<h2>Materiales</h2>
+
+<div id="listaMateriales">
+
+<p>No hay materiales calculados.</p>
+
+</div>
+
+</aside>
+
+</div>
+
 <script src="script.js"></script>
+
 </body>
 </html>
