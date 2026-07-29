@@ -193,3 +193,66 @@ order:2;
 }
 
 }
+
+/* ========================= */
+/* TARJETAS DE TAREAS */
+/* ========================= */
+
+.tarea{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    transition:all .2s ease;
+}
+
+.tarea:hover{
+    border-color:#2563eb;
+    box-shadow:0 4px 12px rgba(37,99,235,.15);
+}
+
+.tarea input{
+    width:18px;
+    height:18px;
+}
+
+/* ========================= */
+/* MATERIALES */
+/* ========================= */
+
+.material{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #ececec;
+}
+
+.material:last-child{
+    border-bottom:none;
+}
+
+.material strong{
+    color:#2563eb;
+}
+
+/* ========================= */
+/* SCROLL */
+/* ========================= */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#cbd5e1;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#94a3b8;
+}
