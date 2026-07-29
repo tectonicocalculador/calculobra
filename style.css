@@ -1,4 +1,32 @@
-/* ====== RESET ====== */
+/* =======================================
+   CALCULOBRA v0.3
+   TECTONICO
+======================================= */
+
+/* ---------- PALETA ---------- */
+
+:root{
+
+    --color-primario:#2563eb;
+    --color-primario-hover:#1d4ed8;
+
+    --color-fondo:#f3f6fb;
+    --color-panel:#ffffff;
+
+    --color-borde:#d9e2ec;
+
+    --color-texto:#1f2937;
+    --color-secundario:#6b7280;
+
+    --color-exito:#16a34a;
+    --color-alerta:#f59e0b;
+    --color-error:#dc2626;
+
+    --radio:12px;
+
+}
+
+/* ---------- GENERAL ---------- */
 
 *{
     margin:0;
@@ -7,56 +35,74 @@
 }
 
 body{
-    font-family:Segoe UI,Arial,sans-serif;
-    background:#eef2f7;
-    color:#1f2937;
+
+    font-family:Segoe UI, Arial, sans-serif;
+
+    background:var(--color-fondo);
+
+    color:var(--color-texto);
+
 }
 
-/* ====== BARRA SUPERIOR ====== */
+/* ---------- HEADER ---------- */
 
 .topbar{
-    height:70px;
-    background:#1f2937;
-    color:white;
-    display:flex;
-    align-items:center;
-    padding:0 30px;
-    box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+    background:white;
+
+    padding:18px 28px;
+
+    border-bottom:1px solid var(--color-borde);
+
+    box-shadow:0 2px 6px rgba(0,0,0,.05);
+
 }
 
 .logo h1{
-    font-size:24px;
-    margin-bottom:3px;
+
+    font-size:28px;
+
+    color:var(--color-primario);
+
 }
 
 .logo p{
-    font-size:13px;
-    opacity:.8;
+
+    color:var(--color-secundario);
+
+    margin-top:3px;
+
 }
 
-/* ====== LAYOUT ====== */
+/* ---------- LAYOUT ---------- */
 
 .app{
+
     display:grid;
-    grid-template-columns:280px 1fr 350px;
+
+    grid-template-columns:280px 1fr 320px;
+
     gap:20px;
-    padding:25px;
-    height:calc(100vh - 70px);
+
+    padding:20px;
+
+    height:calc(100vh - 85px);
+
 }
 
-/* ====== PANELES ====== */
+/* ---------- PANELES ---------- */
 
 .sidebar,
 .contenido,
 .materiales{
 
-    background:white;
+    background:var(--color-panel);
 
-    border-radius:16px;
+    border-radius:var(--radio);
 
-    padding:22px;
+    border:1px solid var(--color-borde);
 
-    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    padding:20px;
 
     overflow:auto;
 
@@ -68,55 +114,75 @@ body{
 
     margin-bottom:20px;
 
+    color:var(--color-texto);
+
 }
 
-/* ====== PARTES ====== */
+/* ---------- ESPACIOS ---------- */
+
+#espacios{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-bottom:20px;
+
+}
 
 .parte{
 
-    background:#f5f7fb;
+    background:white;
 
-    padding:12px 15px;
+    border:1px solid var(--color-borde);
 
     border-radius:10px;
 
-    margin-bottom:10px;
+    padding:14px 16px;
 
     cursor:pointer;
 
-    transition:.2s;
+    transition:.20s;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
 
 }
 
 .parte:hover{
 
-    background:#e8eef8;
+    transform:translateY(-2px);
+
+    box-shadow:0 6px 14px rgba(0,0,0,.08);
 
 }
 
 .parte.activa{
 
-    background:#dbeafe;
+    border:2px solid var(--color-primario);
 
-    border-left:5px solid #2563eb;
+    background:#eff6ff;
 
 }
 
-/* ===== BOTON ===== */
+/* ---------- BOTONES ---------- */
 
 button{
 
     width:100%;
 
-    margin-top:20px;
-
-    padding:14px;
+    padding:12px;
 
     border:none;
 
     border-radius:10px;
 
-    background:#2563eb;
+    background:var(--color-primario);
 
     color:white;
 
@@ -124,135 +190,120 @@ button{
 
     cursor:pointer;
 
-    transition:.2s;
+    transition:.20s;
 
 }
 
 button:hover{
 
-    background:#1d4ed8;
+    background:var(--color-primario-hover);
 
 }
 
-/* ===== CONTENIDO ===== */
+/* ---------- MENÚ (PREPARADO) ---------- */
 
-#tareas{
+.menu{
 
-    background:#f8fafc;
+    position:relative;
+
+}
+
+.menu-boton{
+
+    background:none;
+
+    color:var(--color-secundario);
+
+    border:none;
+
+    width:auto;
+
+    padding:6px 10px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.menu-boton:hover{
+
+    background:#eef2f7;
+
+}
+
+.menu-opciones{
+
+    position:absolute;
+
+    right:0;
+
+    top:34px;
+
+    width:170px;
+
+    background:white;
+
+    border:1px solid var(--color-borde);
 
     border-radius:10px;
 
-    padding:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
 
-    min-height:250px;
+    display:none;
 
-}
+    overflow:hidden;
 
-/* ===== MATERIALES ===== */
-
-#listaMateriales{
-
-    background:#f8fafc;
-
-    border-radius:10px;
-
-    padding:20px;
-
-    min-height:300px;
+    z-index:100;
 
 }
 
-/* ===== RESPONSIVE ===== */
+.menu-opciones button{
+
+    width:100%;
+
+    background:white;
+
+    color:var(--color-texto);
+
+    text-align:left;
+
+    border-radius:0;
+
+    padding:12px 14px;
+
+}
+
+.menu-opciones button:hover{
+
+    background:#f5f7fb;
+
+}
+
+/* ---------- TAREAS ---------- */
+
+#tareas h3{
+
+    margin-bottom:20px;
+
+}
+
+#tareas p{
+
+    color:var(--color-secundario);
+
+}
+
+/* ---------- RESPONSIVE ---------- */
 
 @media(max-width:1000px){
 
-.app{
+    .app{
 
-grid-template-columns:1fr;
+        grid-template-columns:1fr;
 
-height:auto;
+        height:auto;
 
-}
+    }
 
-.materiales{
-
-order:3;
-
-}
-
-.sidebar{
-
-order:1;
-
-}
-
-.contenido{
-
-order:2;
-
-}
-
-}
-
-/* ========================= */
-/* TARJETAS DE TAREAS */
-/* ========================= */
-
-.tarea{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    background:#ffffff;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    padding:12px 14px;
-    margin-bottom:10px;
-    transition:all .2s ease;
-}
-
-.tarea:hover{
-    border-color:#2563eb;
-    box-shadow:0 4px 12px rgba(37,99,235,.15);
-}
-
-.tarea input{
-    width:18px;
-    height:18px;
-}
-
-/* ========================= */
-/* MATERIALES */
-/* ========================= */
-
-.material{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px 0;
-    border-bottom:1px solid #ececec;
-}
-
-.material:last-child{
-    border-bottom:none;
-}
-
-.material strong{
-    color:#2563eb;
-}
-
-/* ========================= */
-/* SCROLL */
-/* ========================= */
-
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#cbd5e1;
-    border-radius:20px;
-}
-
-::-webkit-scrollbar-thumb:hover{
-    background:#94a3b8;
 }
