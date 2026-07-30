@@ -4,7 +4,7 @@
 // =====================================================
 
 const obra = { sectores: [] };
-º
+
 let sectorSeleccionadoId = null;
 let rubroSeleccionadoId = null;
 
