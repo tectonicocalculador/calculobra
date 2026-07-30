@@ -91,21 +91,7 @@ function abrirCatalogo() {
 
 }
 
-    if (sectorSeleccionadoId === null) {
-        alert("Primero seleccione un sector.");
-        return;
-    }
-
-    buscarRubro.value = "";
-
-    modal.classList.remove("oculto");
-
-    cargarCatalogo();
-
-    buscarRubro.focus();
-
-}
-
+    
 function cerrarCatalogo() {
 
     modal.classList.add("oculto");
