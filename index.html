@@ -3,12 +3,12 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CalculObra | TECTONICO</title>
+    <title>CalculObra | TECTONICO</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -18,50 +18,64 @@
 
     <div class="logo">
         <h1>TECTONICO</h1>
-        <p>CalculObra v0.2</p>
+        <p>CalculObra v0.3</p>
     </div>
 
 </header>
 
 <div class="app">
 
-    <!-- ESPACIOS -->
+    <!-- SECTORES -->
 
     <aside class="sidebar">
 
-        <h2>Espacios</h2>
+        <h2>Sectores</h2>
 
-        <div id="espacios"></div>
+        <div id="sectores">
 
-        <button id="nuevoEspacio">
-            ➕ Nuevo Espacio
+            <p class="mensaje-vacio">
+                No hay sectores.
+            </p>
+
+        </div>
+
+        <button id="nuevoSector">
+            ➕ Nuevo Sector
         </button>
 
     </aside>
 
-    <!-- TAREAS -->
+    <!-- RUBROS -->
 
     <main class="contenido">
 
-        <h2>Tareas</h2>
+        <h2>Rubros</h2>
 
-        <div id="tareas">
+        <div id="rubros">
 
-            <p>Seleccione un espacio.</p>
+            <p class="mensaje-vacio">
+                Seleccione un sector.
+            </p>
 
         </div>
 
+        <button id="agregarRubro">
+            ➕ Agregar Rubro
+        </button>
+
     </main>
 
-    <!-- COMPUTO -->
+    <!-- DETALLE -->
 
     <aside class="materiales">
 
-        <h2>Cómputo</h2>
+        <h2>Detalle</h2>
 
-        <div id="listaMateriales">
+        <div id="detalle">
 
-            <p>No hay materiales.</p>
+            <p class="mensaje-vacio">
+                Seleccione un rubro para comenzar.
+            </p>
 
         </div>
 
@@ -69,6 +83,7 @@
 
 </div>
 
+<script src="catalogo.js"></script>
 <script src="script.js"></script>
 
 </body>
