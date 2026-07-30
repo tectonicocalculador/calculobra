@@ -1,126 +1,146 @@
-// =======================================
-// CALCULOBRA v0.3
-// Gestión de Espacios
-// =======================================
+// =====================================================
+// CALCULOBRA | TECTONICO
+// script.js - Versión 0.3
+// =====================================================
 
-const espacios = [];
+const obra = { sectores: [] };
+º
+let sectorSeleccionadoId = null;
+let rubroSeleccionadoId = null;
 
-let espacioSeleccionado = null;
+const contSectores = document.getElementById("sectores");
+const contRubros = document.getElementById("rubros");
+const contDetalle = document.getElementById("detalle");
 
-// =======================================
-// INICIO
-// =======================================
+document.getElementById("nuevoSector").addEventListener("click", crearSector);
+document.getElementById("agregarRubro").addEventListener("click", agregarRubro);
 
-document.addEventListener("DOMContentLoaded", () => {
+function obtenerSector(id){
+    return obra.sectores.find(s => s.id === id);
+}
 
-    const boton = document.getElementById("nuevoEspacio");
+function obtenerRubro(){
+    const s = obtenerSector(sectorSeleccionadoId);
+    return s ? s.rubros.find(r => r.id === rubroSeleccionadoId) : null;
+}
 
-    boton.addEventListener("click", agregarEspacio);
-
-    renderizarEspacios();
-
-    renderizarTareas();
-
-});
-
-// =======================================
-// AGREGAR ESPACIO
-// =======================================
-
-function agregarEspacio(){
-
-    const nombre = prompt("Nombre del espacio");
-
+function crearSector(){
+    const nombre = prompt("Nombre del sector:");
     if(!nombre) return;
 
-    espacios.push({
-
+    obra.sectores.push({
         id: Date.now(),
-
-        nombre: nombre,
-
-        estado: "⚪",
-
-        tareas: []
-
+        nombre: nombre.trim(),
+        rubros:[]
     });
 
-    renderizarEspacios();
-
+    renderSectores();
 }
 
-// =======================================
-// RENDERIZAR ESPACIOS
-// =======================================
+function agregarRubro(){
 
-function renderizarEspacios(){
-
-    const contenedor = document.getElementById("espacios");
-
-    contenedor.innerHTML = "";
-
-    espacios.forEach((espacio, indice)=>{
-
-        const div = document.createElement("div");
-
-        div.className = "parte";
-
-        if(indice === espacioSeleccionado){
-            div.classList.add("activa");
-        }
-
-        div.innerHTML = `
-            <span>${espacio.estado} ${espacio.nombre}</span>
-        `;
-
-        div.addEventListener("click",()=>{
-
-            espacioSeleccionado = indice;
-
-            renderizarEspacios();
-
-            renderizarTareas();
-
-        });
-
-        contenedor.appendChild(div);
-
-    });
-
-}
-
-// =======================================
-// TAREAS
-// =======================================
-
-function renderizarTareas(){
-
-    const contenedor = document.getElementById("tareas");
-
-    if(espacioSeleccionado === null){
-
-        contenedor.innerHTML = `
-            <p>Seleccione un espacio.</p>
-        `;
-
+    if(sectorSeleccionadoId===null){
+        alert("Primero seleccione un sector.");
         return;
-
     }
 
-    const espacio = espacios[espacioSeleccionado];
+    const tipo=prompt("Nombre del rubro:");
+    if(!tipo) return;
 
-    contenedor.innerHTML = `
+    const descripcion=prompt("Descripción (opcional):") || "";
 
-        <h3>${espacio.nombre}</h3>
+    obtenerSector(sectorSeleccionadoId).rubros.push({
+        id:Date.now(),
+        tipo,
+        descripcion,
+        datos:{}
+    });
 
-        <button id="nuevaTarea">
-            ➕ Nueva tarea
-        </button>
-
-        <p style="margin-top:20px;color:#777;">
-            Este espacio todavía no tiene tareas.
-        </p>
-
-    `;
+    renderRubros();
 
 }
+
+function renderSectores(){
+
+    if(obra.sectores.length===0){
+        contSectores.innerHTML='<p class="mensaje-vacio">No hay sectores.</p>';
+        return;
+    }
+
+    contSectores.innerHTML="";
+
+    obra.sectores.forEach(sector=>{
+
+        const div=document.createElement("div");
+        div.className="item-sector"+(sector.id===sectorSeleccionadoId?" activo":"");
+        div.textContent=sector.nombre;
+
+        div.onclick=()=>{
+            sectorSeleccionadoId=sector.id;
+            rubroSeleccionadoId=null;
+            renderSectores();
+            renderRubros();
+            renderDetalle();
+        };
+
+        contSectores.appendChild(div);
+
+    });
+
+}
+
+function renderRubros(){
+
+    const sector=obtenerSector(sectorSeleccionadoId);
+
+    if(!sector){
+        contRubros.innerHTML='<p class="mensaje-vacio">Seleccione un sector.</p>';
+        return;
+    }
+
+    if(sector.rubros.length===0){
+        contRubros.innerHTML='<p class="mensaje-vacio">Todavía no hay rubros.</p>';
+        return;
+    }
+
+    contRubros.innerHTML="";
+
+    sector.rubros.forEach(r=>{
+
+        const div=document.createElement("div");
+        div.className="item-rubro"+(r.id===rubroSeleccionadoId?" activo":"");
+
+        div.innerHTML="<div class='titulo'>🧱 "+r.tipo+"</div>"+(r.descripcion?"<div class='desc'>("+r.descripcion+")</div>":"");
+
+        div.onclick=()=>{
+            rubroSeleccionadoId=r.id;
+            renderRubros();
+            renderDetalle();
+        };
+
+        contRubros.appendChild(div);
+
+    });
+
+}
+
+function renderDetalle(){
+
+    const rubro=obtenerRubro();
+
+    if(!rubro){
+        contDetalle.innerHTML='<p class="mensaje-vacio">Seleccione un rubro para comenzar.</p>';
+        return;
+    }
+
+    contDetalle.innerHTML=`
+    <h3>${rubro.tipo}</h3>
+    <p><strong>Descripción:</strong> ${rubro.descripcion || "Sin descripción"}</p>
+    <hr style="margin:20px 0">
+    <p>En este panel aparecerá el formulario específico del rubro.</p>
+    <pre>${JSON.stringify(rubro.datos,null,2)}</pre>`;
+}
+
+renderSectores();
+renderRubros();
+renderDetalle();
