@@ -7,7 +7,9 @@ const obra = JSON.parse(localStorage.getItem("calculobra")) || {
     sectores: []
 };
 
-let sectorSeleccionadoId = null;
+let sectorSeleccionadoId =
+    obra.sectores.length > 0 ? obra.sectores[0].id : null;
+
 let rubroSeleccionadoId = null;
 
 const contSectores = document.getElementById("sectores");
