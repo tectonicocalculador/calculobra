@@ -1,6 +1,6 @@
 // =====================================================
 // CALCULOBRA | TECTONICO
-// script.js - Versión 0.3
+// script.js - Versión 1.0 (Base)
 // =====================================================
 
 const obra = { sectores: [] };
@@ -12,8 +12,15 @@ const contSectores = document.getElementById("sectores");
 const contRubros = document.getElementById("rubros");
 const contDetalle = document.getElementById("detalle");
 
+const modal = document.getElementById("modalCatalogo");
+const listaCatalogo = document.getElementById("listaCatalogo");
+const buscarRubro = document.getElementById("buscarRubro");
+
 document.getElementById("nuevoSector").addEventListener("click", crearSector);
-document.getElementById("agregarRubro").addEventListener("click", agregarRubro);
+document.getElementById("agregarRubro").addEventListener("click", abrirCatalogo);
+document.getElementById("cerrarModal").addEventListener("click", cerrarCatalogo);
+
+buscarRubro.addEventListener("input", cargarCatalogo);
 
 function obtenerSector(id){
     return obra.sectores.find(s => s.id === id);
@@ -37,26 +44,67 @@ function crearSector(){
     renderSectores();
 }
 
-function agregarRubro(){
-
+function abrirCatalogo(){
     if(sectorSeleccionadoId===null){
         alert("Primero seleccione un sector.");
         return;
     }
+    buscarRubro.value="";
+    modal.classList.remove("oculto");
+    cargarCatalogo();
+}
 
-    const tipo=prompt("Nombre del rubro:");
-    if(!tipo) return;
+function cerrarCatalogo(){
+    modal.classList.add("oculto");
+}
 
-    const descripcion=prompt("Descripción (opcional):") || "";
+function cargarCatalogo(){
 
-    obtenerSector(sectorSeleccionadoId).rubros.push({
-        id:Date.now(),
-        tipo,
-        descripcion,
-        datos:{}
+    const filtro = buscarRubro.value.toLowerCase();
+    listaCatalogo.innerHTML="";
+
+    const categorias=[...new Set(catalogoRubros.map(r=>r.categoria))];
+
+    categorias.forEach(cat=>{
+
+        const items=catalogoRubros.filter(r=>
+            r.categoria===cat &&
+            r.nombre.toLowerCase().includes(filtro)
+        );
+
+        if(items.length===0) return;
+
+        const titulo=document.createElement("div");
+        titulo.className="categoria";
+        titulo.textContent=cat;
+        listaCatalogo.appendChild(titulo);
+
+        items.forEach(r=>{
+
+            const div=document.createElement("div");
+            div.className="item-catalogo";
+            div.innerHTML=`${r.icono} ${r.nombre}`;
+
+            div.onclick=()=>{
+
+                obtenerSector(sectorSeleccionadoId).rubros.push({
+                    id:Date.now(),
+                    tipo:r.nombre,
+                    descripcion:"",
+                    calculadora:r.calculadora,
+                    datos:{}
+                });
+
+                cerrarCatalogo();
+                renderRubros();
+
+            };
+
+            listaCatalogo.appendChild(div);
+
+        });
+
     });
-
-    renderRubros();
 
 }
 
@@ -110,7 +158,7 @@ function renderRubros(){
         const div=document.createElement("div");
         div.className="item-rubro"+(r.id===rubroSeleccionadoId?" activo":"");
 
-        div.innerHTML="<div class='titulo'>🧱 "+r.tipo+"</div>"+(r.descripcion?"<div class='desc'>("+r.descripcion+")</div>":"");
+        div.innerHTML=`<div class="titulo">${r.tipo}</div>`;
 
         div.onclick=()=>{
             rubroSeleccionadoId=r.id;
@@ -135,10 +183,9 @@ function renderDetalle(){
 
     contDetalle.innerHTML=`
     <h3>${rubro.tipo}</h3>
-    <p><strong>Descripción:</strong> ${rubro.descripcion || "Sin descripción"}</p>
+    <p>Calculadora: <strong>${rubro.calculadora}</strong></p>
     <hr style="margin:20px 0">
-    <p>En este panel aparecerá el formulario específico del rubro.</p>
-    <pre>${JSON.stringify(rubro.datos,null,2)}</pre>`;
+    <p>Próximamente aparecerá aquí el formulario específico.</p>`;
 }
 
 renderSectores();
