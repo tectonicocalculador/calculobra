@@ -128,10 +128,19 @@ function cargarCatalogo() {
             div.innerHTML = `${r.icono} ${r.nombre}`;
 
             div.onclick = () => {
-
+            
+                alert("1");
+                
                 const sector = obtenerSector(sectorSeleccionadoId);
 
-                if (!sector) return;
+                alert("2");
+
+                if (!sector){
+                   alert("NO HAY SECTOR");
+                   return;
+                }    
+
+                alert("3");
 
                 sector.rubros.push({
                     id: generarId(),
