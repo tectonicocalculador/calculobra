@@ -1,32 +1,7 @@
-/* =======================================
-   CALCULOBRA v0.3
-   TECTONICO
-======================================= */
-
-/* ---------- PALETA ---------- */
-
-:root{
-
-    --color-primario:#2563eb;
-    --color-primario-hover:#1d4ed8;
-
-    --color-fondo:#f3f6fb;
-    --color-panel:#ffffff;
-
-    --color-borde:#d9e2ec;
-
-    --color-texto:#1f2937;
-    --color-secundario:#6b7280;
-
-    --color-exito:#16a34a;
-    --color-alerta:#f59e0b;
-    --color-error:#dc2626;
-
-    --radio:12px;
-
-}
-
-/* ---------- GENERAL ---------- */
+/* =====================================================
+   CALCULOBRA | TECTONICO
+   Versión 0.3
+===================================================== */
 
 *{
     margin:0;
@@ -36,75 +11,90 @@
 
 body{
 
-    font-family:Segoe UI, Arial, sans-serif;
-
-    background:var(--color-fondo);
-
-    color:var(--color-texto);
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background:#f4f6f8;
+    color:#2d3436;
+    height:100vh;
 
 }
 
-/* ---------- HEADER ---------- */
+/*==========================
+    BARRA SUPERIOR
+==========================*/
 
 .topbar{
 
+    height:70px;
     background:white;
 
-    padding:18px 28px;
+    display:flex;
+    align-items:center;
 
-    border-bottom:1px solid var(--color-borde);
+    padding:0 30px;
 
-    box-shadow:0 2px 6px rgba(0,0,0,.05);
+    border-bottom:1px solid #dfe6e9;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
 
 }
 
 .logo h1{
 
-    font-size:28px;
-
-    color:var(--color-primario);
+    font-size:24px;
+    letter-spacing:2px;
 
 }
 
 .logo p{
 
-    color:var(--color-secundario);
-
-    margin-top:3px;
+    color:#7f8c8d;
+    font-size:13px;
+    margin-top:4px;
 
 }
 
-/* ---------- LAYOUT ---------- */
+/*==========================
+        CONTENEDOR
+==========================*/
 
 .app{
 
     display:grid;
 
-    grid-template-columns:280px 1fr 320px;
+    grid-template-columns:
+
+        280px
+        380px
+        1fr;
 
     gap:20px;
 
     padding:20px;
 
-    height:calc(100vh - 85px);
+    height:calc(100vh - 70px);
 
 }
 
-/* ---------- PANELES ---------- */
+/*==========================
+        PANELES
+==========================*/
 
 .sidebar,
 .contenido,
 .materiales{
 
-    background:var(--color-panel);
+    background:white;
 
-    border-radius:var(--radio);
-
-    border:1px solid var(--color-borde);
+    border-radius:14px;
 
     padding:20px;
 
-    overflow:auto;
+    display:flex;
+    flex-direction:column;
+
+    box-shadow:0 4px 14px rgba(0,0,0,.06);
+
+    overflow:hidden;
 
 }
 
@@ -112,198 +102,125 @@ body{
 .contenido h2,
 .materiales h2{
 
-    margin-bottom:20px;
+    font-size:18px;
 
-    color:var(--color-texto);
+    margin-bottom:18px;
 
-}
+    padding-bottom:12px;
 
-/* ---------- ESPACIOS ---------- */
-
-#espacios{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-    margin-bottom:20px;
+    border-bottom:1px solid #ececec;
 
 }
 
-.parte{
+/*==========================
+      CONTENEDORES
+==========================*/
 
-    background:white;
+#sectores,
+#rubros,
+#detalle{
 
-    border:1px solid var(--color-borde);
+    flex:1;
 
-    border-radius:10px;
-
-    padding:14px 16px;
-
-    cursor:pointer;
-
-    transition:.20s;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
+    overflow-y:auto;
 
 }
 
-.parte:hover{
+/*==========================
+        MENSAJES
+==========================*/
 
-    transform:translateY(-2px);
+.mensaje-vacio{
 
-    box-shadow:0 6px 14px rgba(0,0,0,.08);
+    color:#95a5a6;
+
+    text-align:center;
+
+    margin-top:50px;
+
+    line-height:1.6;
 
 }
 
-.parte.activa{
-
-    border:2px solid var(--color-primario);
-
-    background:#eff6ff;
-
-}
-
-/* ---------- BOTONES ---------- */
+/*==========================
+        BOTONES
+==========================*/
 
 button{
 
-    width:100%;
+    margin-top:18px;
 
-    padding:12px;
+    padding:14px;
 
     border:none;
 
     border-radius:10px;
 
-    background:var(--color-primario);
+    cursor:pointer;
+
+    background:#1f6feb;
 
     color:white;
 
     font-size:15px;
 
-    cursor:pointer;
+    font-weight:600;
 
-    transition:.20s;
+    transition:.25s;
 
 }
 
 button:hover{
 
-    background:var(--color-primario-hover);
+    background:#185abc;
 
 }
 
-/* ---------- MENÚ (PREPARADO) ---------- */
+/*==========================
+    SCROLL
+==========================*/
 
-.menu{
+::-webkit-scrollbar{
 
-    position:relative;
-
-}
-
-.menu-boton{
-
-    background:none;
-
-    color:var(--color-secundario);
-
-    border:none;
-
-    width:auto;
-
-    padding:6px 10px;
-
-    border-radius:8px;
-
-    cursor:pointer;
+    width:8px;
 
 }
 
-.menu-boton:hover{
+::-webkit-scrollbar-thumb{
 
-    background:#eef2f7;
-
-}
-
-.menu-opciones{
-
-    position:absolute;
-
-    right:0;
-
-    top:34px;
-
-    width:170px;
-
-    background:white;
-
-    border:1px solid var(--color-borde);
+    background:#d0d7de;
 
     border-radius:10px;
 
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
 
-    display:none;
+::-webkit-scrollbar-track{
 
-    overflow:hidden;
-
-    z-index:100;
+    background:transparent;
 
 }
 
-.menu-opciones button{
+/*==========================
+    RESPONSIVE
+==========================*/
 
-    width:100%;
+@media(max-width:1100px){
 
-    background:white;
+.app{
 
-    color:var(--color-texto);
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto auto;
 
-    text-align:left;
-
-    border-radius:0;
-
-    padding:12px 14px;
-
-}
-
-.menu-opciones button:hover{
-
-    background:#f5f7fb;
+    height:auto;
 
 }
 
-/* ---------- TAREAS ---------- */
+.sidebar,
+.contenido,
+.materiales{
 
-#tareas h3{
-
-    margin-bottom:20px;
-
-}
-
-#tareas p{
-
-    color:var(--color-secundario);
+    min-height:300px;
 
 }
-
-/* ---------- RESPONSIVE ---------- */
-
-@media(max-width:1000px){
-
-    .app{
-
-        grid-template-columns:1fr;
-
-        height:auto;
-
-    }
 
 }
