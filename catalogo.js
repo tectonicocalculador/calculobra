@@ -1,9 +1,9 @@
 // =======================================
-// CATÁLOGO DE TAREAS
+// CATÁLOGO DE RUBROS
 // CalculObra
 // =======================================
 
-const catalogoTareas = [
+const catalogoRubros = [
 
     // ALBAÑILERÍA
 
@@ -11,70 +11,88 @@ const catalogoTareas = [
         id: 1,
         icono: "🧱",
         nombre: "Mampostería",
-        categoria: "Albañilería"
+        categoria: "Albañilería",
+        calculadora: "mamposteria"
     },
 
     {
         id: 2,
         icono: "🪣",
         nombre: "Revoque grueso",
-        categoria: "Albañilería"
+        categoria: "Albañilería",
+        calculadora: "revoque_grueso"
     },
 
     {
         id: 3,
         icono: "🪣",
         nombre: "Revoque fino",
-        categoria: "Albañilería"
+        categoria: "Albañilería",
+        calculadora: "revoque_fino"
     },
+
+    // PISOS
 
     {
         id: 4,
         icono: "🏗️",
         nombre: "Contrapiso",
-        categoria: "Pisos"
+        categoria: "Pisos",
+        calculadora: "contrapiso"
     },
 
     {
         id: 5,
         icono: "🧱",
         nombre: "Carpeta",
-        categoria: "Pisos"
+        categoria: "Pisos",
+        calculadora: "carpeta"
     },
 
     {
         id: 6,
         icono: "🟫",
         nombre: "Piso",
-        categoria: "Terminaciones"
+        categoria: "Terminaciones",
+        calculadora: "piso"
     },
+
+    // TERMINACIONES
 
     {
         id: 7,
         icono: "🎨",
         nombre: "Pintura",
-        categoria: "Terminaciones"
+        categoria: "Terminaciones",
+        calculadora: "pintura"
     },
+
+    // CARPINTERÍA
 
     {
         id: 8,
         icono: "🚪",
         nombre: "Aberturas",
-        categoria: "Carpintería"
+        categoria: "Carpintería",
+        calculadora: "aberturas"
     },
+
+    // INSTALACIONES
 
     {
         id: 9,
         icono: "⚡",
         nombre: "Instalación eléctrica",
-        categoria: "Instalaciones"
+        categoria: "Instalaciones",
+        calculadora: "instalacion_electrica"
     },
 
     {
         id: 10,
         icono: "🚰",
         nombre: "Instalación sanitaria",
-        categoria: "Instalaciones"
+        categoria: "Instalaciones",
+        calculadora: "instalacion_sanitaria"
     }
 
 ];
