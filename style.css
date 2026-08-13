@@ -229,7 +229,7 @@ button:hover{
         MODAL
 ========================== */
 
-.oculto{
+.modal.oculto{
     display:none;
 }
 
