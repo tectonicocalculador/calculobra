@@ -306,7 +306,116 @@ function renderRubros() {
             "item-rubro" +
             (r.id === rubroSeleccionadoId ? " activo" : "");
 
-        div.innerHTML = `<div class="titulo">${r.tipo}</div>`;
+        // ==========================
+        // INFORMACIÓN DEL RUBRO
+        // ==========================
+
+        const informacion = document.createElement("div");
+
+        informacion.className = "informacion-rubro";
+
+        const titulo = document.createElement("div");
+
+        titulo.className = "titulo";
+        titulo.textContent = r.tipo;
+
+        informacion.appendChild(titulo);
+
+        // Mostrar descripción si existe
+
+        if (r.descripcion && r.descripcion.trim() !== "") {
+
+            const descripcion = document.createElement("div");
+
+            descripcion.className = "descripcion-rubro";
+            descripcion.textContent = r.descripcion;
+
+            informacion.appendChild(descripcion);
+
+        }
+
+        // ==========================
+        // ACCIONES
+        // ==========================
+
+        const acciones = document.createElement("div");
+
+        acciones.className = "acciones-rubro";
+
+        // BOTÓN EDITAR DESCRIPCIÓN
+
+        const editar = document.createElement("button");
+
+        editar.className = "boton-rubro editar";
+        editar.textContent = "✎";
+        editar.title = "Editar descripción";
+
+        editar.onclick = (e) => {
+
+            e.stopPropagation();
+
+            const nuevaDescripcion = prompt(
+                `Descripción de "${r.tipo}":`,
+                r.descripcion || ""
+            );
+
+            if (nuevaDescripcion === null) return;
+
+            r.descripcion = nuevaDescripcion.trim();
+
+            guardarObra();
+
+            renderRubros();
+            renderDetalle();
+
+        };
+
+        // BOTÓN ELIMINAR
+
+        const eliminar = document.createElement("button");
+
+        eliminar.className = "boton-rubro eliminar";
+        eliminar.textContent = "✕";
+        eliminar.title = "Eliminar rubro";
+
+        eliminar.onclick = (e) => {
+
+            e.stopPropagation();
+
+            const confirmar = confirm(
+                `¿Seguro que querés eliminar "${r.tipo}"?`
+            );
+
+            if (!confirmar) return;
+
+            sector.rubros = sector.rubros.filter(
+                rubro => rubro.id !== r.id
+            );
+
+            if (rubroSeleccionadoId === r.id) {
+                rubroSeleccionadoId = null;
+            }
+
+            guardarObra();
+
+            renderRubros();
+            renderDetalle();
+
+        };
+
+        acciones.appendChild(editar);
+        acciones.appendChild(eliminar);
+
+        // ==========================
+        // ARMAR RUBRO
+        // ==========================
+
+        div.appendChild(informacion);
+        div.appendChild(acciones);
+
+        // ==========================
+        // SELECCIONAR RUBRO
+        // ==========================
 
         div.onclick = () => {
 
