@@ -365,3 +365,58 @@ button:hover{
     background: #fff0f0;
     color: #e74c3c;
 }
+
+/* ==========================
+   ACCIONES DE RUBRO
+========================== */
+
+.item-rubro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.informacion-rubro {
+    flex: 1;
+    min-width: 0;
+}
+
+.titulo {
+    font-weight: 600;
+}
+
+.descripcion-rubro {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #7f8c8d;
+}
+
+.acciones-rubro {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.boton-rubro {
+    margin: 0;
+    padding: 3px 6px;
+    border: none;
+    background: transparent;
+    color: #7f8c8d;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.boton-rubro.editar:hover {
+    background: #eef5ff;
+    color: #1f6feb;
+}
+
+.boton-rubro.eliminar:hover {
+    background: #fff0f0;
+    color: #e74c3c;
+}
