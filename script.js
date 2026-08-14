@@ -147,6 +147,7 @@ function cargarCatalogo() {
                     tipo: r.nombre,
                     descripcion: "",
                     calculadora: r.calculadora,
+                    moduloCalculo: null,
                     datos: {}
                 });
 
