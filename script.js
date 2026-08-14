@@ -483,7 +483,7 @@ function renderDetalle() {
     // ==========================================
 
     const modulosMamposteria = baseCalculos.filter(
-        modulo => modulo.categoria === "Mamposterías"
+    modulo => modulo.categoria === "mamposterias"
     );
 
     // ==========================================
