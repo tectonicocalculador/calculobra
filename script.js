@@ -657,8 +657,53 @@ function renderDetalle() {
 
     }
 
+       }
+
+}
+
+function mostrarResultadoMamposteria(modulo, superficie) {
+
+    const contenedor = document.getElementById("resultadoMamposteria");
+
+    if (!contenedor) return;
+
+    if (superficie === null || superficie <= 0) {
+        contenedor.innerHTML = "";
+        return;
+    }
+
+    let html = `
+        <h3 style="margin-bottom:15px;">
+            Materiales necesarios
+        </h3>
+    `;
+
+    modulo.materiales.forEach(material => {
+
+        const cantidadTotal =
+            material.cantidadPorUnidad * superficie;
+
+        html += `
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                padding:10px 0;
+                border-bottom:1px solid #eeeeee;
+            ">
+                <span>
+                    <strong>${material.nombre}</strong>
+                </span>
+
+                <span>
+                    ${cantidadTotal} ${material.unidad}
+                </span>
+            </div>
+        `;
+    });
+
+    contenedor.innerHTML = html;
 }
 
 renderSectores();
 renderRubros();
-renderDetalle();
+renderDetalle(); 
