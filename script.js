@@ -443,19 +443,219 @@ function renderDetalle() {
             '<p class="mensaje-vacio">Seleccione un rubro para comenzar.</p>';
 
         return;
-
     }
+
+    // ==========================================
+    // SI EL RUBRO NO ES MAMPOSTERÍA
+    // ==========================================
+
+    if (rubro.calculadora !== "mamposteria") {
+
         contDetalle.innerHTML = `
+            <h3>${rubro.tipo}</h3>
+
+            ${
+                rubro.descripcion
+                    ? `<p>${rubro.descripcion}</p>`
+                    : ""
+            }
+
+            <hr style="margin:20px 0">
+
+            <div class="contenido-calculadora">
+                <p>Calculadora próximamente.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    // ==========================================
+    // DATOS DEL RUBRO
+    // ==========================================
+
+    if (!rubro.datos) {
+        rubro.datos = {};
+    }
+
+    // ==========================================
+    // MÓDULOS DE MAMPOSTERÍA
+    // ==========================================
+
+    const modulosMamposteria = baseCalculos.filter(
+        modulo => modulo.categoria === "Mamposterías"
+    );
+
+    // ==========================================
+    // MÓDULO SELECCIONADO
+    // ==========================================
+
+    const moduloSeleccionado =
+        modulosMamposteria.find(
+            modulo => modulo.id === rubro.moduloCalculo
+        );
+
+    // ==========================================
+    // MOSTRAR DETALLE
+    // ==========================================
+
+    contDetalle.innerHTML = `
+
         <h3>${rubro.tipo}</h3>
-        <p>Calculadora: <strong>${rubro.calculadora}</strong></p>
+
+        ${
+            rubro.descripcion
+                ? `<p class="descripcion-detalle">
+                    ${rubro.descripcion}
+                   </p>`
+                : ""
+        }
+
         <hr style="margin:20px 0">
 
         <div class="contenido-calculadora">
 
-            <p>Próximamente aparecerá aquí el formulario específico.</p>
+            <label>
+                Tipo de mampostería
+            </label>
+
+            <select id="selectorModulo">
+
+                <option value="">
+                    Seleccionar tipo...
+                </option>
+
+                ${modulosMamposteria.map(modulo => `
+                    <option
+                        value="${modulo.id}"
+                        ${rubro.moduloCalculo === modulo.id ? "selected" : ""}
+                    >
+                        ${modulo.nombre}
+                    </option>
+                `).join("")}
+
+            </select>
+
+            ${
+                moduloSeleccionado
+                    ? `
+                        <div style="margin-top:20px">
+
+                            <label>
+                                Superficie
+                            </label>
+
+                            <div style="
+                                display:flex;
+                                align-items:center;
+                                gap:10px;
+                                margin-top:8px;
+                            ">
+
+                                <input
+                                    type="number"
+                                    id="superficieMamposteria"
+                                    min="0"
+                                    step="0.01"
+                                    value="${rubro.datos.superficie || ""}"
+                                    placeholder="0,00"
+                                >
+
+                                <span>${moduloSeleccionado.unidad}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="resultadoMamposteria"
+                            style="margin-top:25px"
+                        ></div>
+                    `
+                    : `
+                        <p style="
+                            margin-top:20px;
+                            color:#95a5a6;
+                        ">
+                            Seleccioná el tipo de mampostería para comenzar.
+                        </p>
+                    `
+            }
 
         </div>
     `;
+
+    // ==========================================
+    // CAMBIO DE MÓDULO
+    // ==========================================
+
+    const selectorModulo =
+        document.getElementById("selectorModulo");
+
+    selectorModulo.addEventListener("change", () => {
+
+        rubro.moduloCalculo =
+            selectorModulo.value || null;
+
+        rubro.datos.superficie = "";
+
+        guardarObra();
+
+        renderDetalle();
+
+    });
+
+    // ==========================================
+    // INGRESO DE SUPERFICIE
+    // ==========================================
+
+    if (moduloSeleccionado) {
+
+        const inputSuperficie =
+            document.getElementById("superficieMamposteria");
+
+        inputSuperficie.addEventListener("input", () => {
+
+            const valor =
+                parseFloat(inputSuperficie.value);
+
+            if (isNaN(valor)) {
+
+                rubro.datos.superficie = "";
+
+                guardarObra();
+
+                mostrarResultadoMamposteria(
+                    moduloSeleccionado,
+                    null
+                );
+
+                return;
+            }
+
+            rubro.datos.superficie = valor;
+
+            guardarObra();
+
+            mostrarResultadoMamposteria(
+                moduloSeleccionado,
+                valor
+            );
+
+        });
+
+        // Mostrar resultado guardado
+
+        if (rubro.datos.superficie !== "") {
+
+            mostrarResultadoMamposteria(
+                moduloSeleccionado,
+                parseFloat(rubro.datos.superficie)
+            );
+
+        }
+
+    }
 
 }
 
