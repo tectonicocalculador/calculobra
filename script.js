@@ -188,14 +188,91 @@ function renderSectores() {
             "item-sector" +
             (sector.id === sectorSeleccionadoId ? " activo" : "");
 
-        div.textContent = sector.nombre;
-                div.onclick = () => {
+        const nombre = document.createElement("span");
+        nombre.textContent = sector.nombre;
+
+        const acciones = document.createElement("div");
+        acciones.className = "acciones-sector";
+
+        const editar = document.createElement("button");
+        editar.className = "boton-sector editar";
+        editar.textContent = "✎";
+        editar.title = "Editar sector";
+
+        const eliminar = document.createElement("button");
+        eliminar.className = "boton-sector eliminar";
+        eliminar.textContent = "✕";
+        eliminar.title = "Eliminar sector";
+
+        editar.onclick = (e) => {
+            e.stopPropagation();
+
+            const nuevoNombre = prompt(
+                "Nombre del sector:",
+                sector.nombre
+            );
+
+            if (!nuevoNombre || !nuevoNombre.trim()) return;
+
+            sector.nombre = nuevoNombre.trim();
+
+            guardarObra();
+            renderSectores();
+        };
+
+        eliminar.onclick = (e) => {
+            e.stopPropagation();
+
+            const confirmar = confirm(
+                `¿Seguro que querés eliminar "${sector.nombre}"?\n\nTambién se eliminarán los rubros que contiene.`
+            );
+
+            if (!confirmar) return;
+
+            obra.sectores = obra.sectores.filter(
+                s => s.id !== sector.id
+            );
+
+            if (sectorSeleccionadoId === sector.id) {
+
+                if (obra.sectores.length > 0) {
+                    sectorSeleccionadoId =
+                        obra.sectores[0].id;
+                } else {
+                    sectorSeleccionadoId = null;
+                }
+
+                rubroSeleccionadoId = null;
+            }
+
+            guardarObra();
+
+            renderSectores();
+            renderRubros();
+            renderDetalle();
+        };
+
+        acciones.appendChild(editar);
+        acciones.appendChild(eliminar);
+
+        div.appendChild(nombre);
+        div.appendChild(acciones);
+
+        div.onclick = () => {
 
             sectorSeleccionadoId = sector.id;
             rubroSeleccionadoId = null;
 
             renderSectores();
             renderRubros();
+            renderDetalle();
+        };
+
+        contSectores.appendChild(div);
+
+    });
+
+}
             renderDetalle();
 
         };
