@@ -653,10 +653,6 @@ function renderDetalle() {
                 parseFloat(rubro.datos.superficie)
             );
 
-        }
-
-    }
-
        }
 
 }
