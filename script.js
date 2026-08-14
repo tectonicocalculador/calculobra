@@ -268,16 +268,7 @@ function renderSectores() {
             renderDetalle();
         };
 
-        contSectores.appendChild(div);
-
-    });
-
-}
-            renderDetalle();
-
-        };
-
-        contSectores.appendChild(div);
+            contSectores.appendChild(div);
 
     });
 
