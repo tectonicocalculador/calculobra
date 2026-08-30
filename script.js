@@ -683,18 +683,16 @@ function renderDetalle() {
         // =================================================
 
         if (
-            rubro.calculadora === "revoque_grueso" ||
-            rubro.calculadora === "revoque_fino"
-        ) {
+    rubro.calculadora === "revoque_grueso" ||
+    rubro.calculadora === "revoque_fino" ||
+    rubro.calculadora === "azotado_hidrofugo"
+) {
 
             if (!rubro.datos) {
                 rubro.datos = {};
             }
 
-            const tipoRevoque =
-                rubro.calculadora === "revoque_grueso"
-                    ? "revoque_grueso"
-                    : "revoque_fino";
+            const tipoRevoque = rubro.calculadora;
 
             const modulos = baseCalculos.filter(
                 modulo =>
