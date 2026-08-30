@@ -31,6 +31,14 @@ const catalogoRubros = [
         calculadora: "revoque_fino"
     },
 
+    {
+        id: 11,
+        icono: "🪣",
+        nombre: "Azotado hidrófugo",
+        categoria: "Albañilería",
+        calculadora: "azotado_hidrofugo"
+    },
+
     // PISOS
 
     {
