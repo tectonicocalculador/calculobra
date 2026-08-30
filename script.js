@@ -463,14 +463,63 @@ function renderDetalle() {
 
     sector.rubros.forEach(rubro => {
 
-        // -------------------------------------------------
-        // RUBROS QUE TODAVÍA NO TIENEN CALCULADORA
-        // -------------------------------------------------
+        // =================================================
+        // MAMPOSTERÍA
+        // =================================================
 
-        if (rubro.calculadora !== "mamposteria") {
+        if (rubro.calculadora === "mamposteria") {
+
+            if (!rubro.datos) {
+                rubro.datos = {};
+            }
+
+            const modulos = baseCalculos.filter(
+                modulo => modulo.categoria === "mamposterias"
+            );
+
+            const moduloSeleccionado =
+                modulos.find(
+                    modulo => modulo.id === rubro.moduloCalculo
+                );
+
+            const superficie =
+                parseFloat(rubro.datos.superficie);
+
+            // ---------------------------------------------
+            // SUMAR AL ACUMULADO
+            // ---------------------------------------------
+
+            if (
+                moduloSeleccionado &&
+                !isNaN(superficie) &&
+                superficie > 0
+            ) {
+
+                moduloSeleccionado.materiales.forEach(material => {
+
+                    const cantidad =
+                        material.cantidadPorUnidad * superficie;
+
+                    if (!acumuladoMateriales[material.nombre]) {
+
+                        acumuladoMateriales[material.nombre] = {
+                            cantidad: 0,
+                            unidad: material.unidad
+                        };
+
+                    }
+
+                    acumuladoMateriales[material.nombre].cantidad += cantidad;
+
+                });
+            }
+
+            // ---------------------------------------------
+            // MOSTRAR MAMPOSTERÍA
+            // ---------------------------------------------
 
             htmlRubros += `
-                <div class="detalle-rubro" style="margin-bottom:30px;">
+                <div class="detalle-rubro" style="margin-bottom:35px;">
 
                     <h3>${rubro.tipo}</h3>
 
@@ -485,7 +534,141 @@ function renderDetalle() {
                     <hr style="margin:20px 0">
 
                     <div class="contenido-calculadora">
-                        <p>Calculadora próximamente.</p>
+
+                        <label>
+                            Tipo de mampostería
+                        </label>
+
+                        <select
+                            class="selectorModuloDetalle"
+                            data-rubro-id="${rubro.id}"
+                        >
+
+                            <option value="">
+                                Seleccionar tipo...
+                            </option>
+
+                            ${modulos.map(modulo => `
+                                <option
+                                    value="${modulo.id}"
+                                    ${
+                                        rubro.moduloCalculo === modulo.id
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    ${modulo.nombre}
+                                </option>
+                            `).join("")}
+
+                        </select>
+
+                        ${
+                            moduloSeleccionado
+                                ? `
+
+                                    <div style="margin-top:20px">
+
+                                        <label>
+                                            Superficie
+                                        </label>
+
+                                        <div style="
+                                            display:flex;
+                                            align-items:center;
+                                            gap:10px;
+                                            margin-top:8px;
+                                        ">
+
+                                            <input
+                                                type="number"
+                                                class="superficieDetalle"
+                                                data-rubro-id="${rubro.id}"
+                                                min="0"
+                                                step="0.01"
+                                                value="${
+                                                    rubro.datos.superficie || ""
+                                                }"
+                                                placeholder="0,00"
+                                            >
+
+                                            <span>
+                                                ${moduloSeleccionado.unidad}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div style="margin-top:25px">
+
+                                        <h3>
+                                            Materiales necesarios
+                                        </h3>
+
+                                        ${
+                                            !isNaN(superficie) &&
+                                            superficie > 0
+
+                                                ?
+
+                                            moduloSeleccionado.materiales.map(
+                                                material => {
+
+                                                    const cantidad =
+                                                        material.cantidadPorUnidad *
+                                                        superficie;
+
+                                                    return `
+                                                        <div style="
+                                                            display:flex;
+                                                            justify-content:space-between;
+                                                            padding:10px 0;
+                                                            border-bottom:1px solid #eeeeee;
+                                                        ">
+
+                                                            <span>
+                                                                <strong>
+                                                                    ${material.nombre}
+                                                                </strong>
+                                                            </span>
+
+                                                            <span>
+                                                                ${cantidad.toFixed(2)}
+                                                                ${material.unidad}
+                                                            </span>
+
+                                                        </div>
+                                                    `;
+                                                }
+                                            ).join("")
+
+                                                :
+
+                                            `<p style="
+                                                color:#95a5a6;
+                                                margin-top:15px;
+                                            ">
+                                                Ingresá una superficie para calcular.
+                                            </p>`
+                                        }
+
+                                    </div>
+
+                                `
+
+                                :
+
+                                `
+                                    <p style="
+                                        margin-top:20px;
+                                        color:#95a5a6;
+                                    ">
+                                        Seleccioná el tipo de mampostería para comenzar.
+                                    </p>
+                                `
+                        }
+
                     </div>
 
                 </div>
@@ -494,61 +677,238 @@ function renderDetalle() {
             return;
         }
 
-        // -------------------------------------------------
-        // DATOS DE MAMPOSTERÍA
-        // -------------------------------------------------
 
-        if (!rubro.datos) {
-            rubro.datos = {};
-        }
-
-        const modulosMamposteria = baseCalculos.filter(
-            modulo => modulo.categoria === "mamposterias"
-        );
-
-        const moduloSeleccionado =
-            modulosMamposteria.find(
-                modulo => modulo.id === rubro.moduloCalculo
-            );
-
-        let superficie = parseFloat(rubro.datos.superficie);
-
-        // -------------------------------------------------
-        // SUMAR MATERIALES AL ACUMULADO
-        // -------------------------------------------------
+        // =================================================
+        // REVOQUES
+        // =================================================
 
         if (
-            moduloSeleccionado &&
-            !isNaN(superficie) &&
-            superficie > 0
+            rubro.calculadora === "revoque_grueso" ||
+            rubro.calculadora === "revoque_fino"
         ) {
 
-            moduloSeleccionado.materiales.forEach(material => {
+            if (!rubro.datos) {
+                rubro.datos = {};
+            }
 
-                const cantidad =
-                    material.cantidadPorUnidad * superficie;
+            const tipoRevoque =
+                rubro.calculadora === "revoque_grueso"
+                    ? "revoque_grueso"
+                    : "revoque_fino";
 
-                if (!acumuladoMateriales[material.nombre]) {
+            const modulos = baseCalculos.filter(
+                modulo =>
+                    modulo.categoria === "revoques" &&
+                    modulo.tipoRevoque === tipoRevoque
+            );
 
-                    acumuladoMateriales[material.nombre] = {
-                        cantidad: 0,
-                        unidad: material.unidad
-                    };
+            const moduloSeleccionado =
+                modulos.find(
+                    modulo => modulo.id === rubro.moduloCalculo
+                );
 
-                }
+            const superficie =
+                parseFloat(rubro.datos.superficie);
 
-                acumuladoMateriales[material.nombre].cantidad += cantidad;
+            // ---------------------------------------------
+            // SUMAR AL ACUMULADO
+            // ---------------------------------------------
 
-            });
+            if (
+                moduloSeleccionado &&
+                !isNaN(superficie) &&
+                superficie > 0
+            ) {
 
+                moduloSeleccionado.materiales.forEach(material => {
+
+                    const cantidad =
+                        material.cantidadPorUnidad * superficie;
+
+                    if (!acumuladoMateriales[material.nombre]) {
+
+                        acumuladoMateriales[material.nombre] = {
+                            cantidad: 0,
+                            unidad: material.unidad
+                        };
+
+                    }
+
+                    acumuladoMateriales[material.nombre].cantidad += cantidad;
+
+                });
+            }
+
+            // ---------------------------------------------
+            // MOSTRAR REVOQUE
+            // ---------------------------------------------
+
+            htmlRubros += `
+                <div class="detalle-rubro" style="margin-bottom:35px;">
+
+                    <h3>${rubro.tipo}</h3>
+
+                    ${
+                        rubro.descripcion
+                            ? `<p class="descripcion-detalle">
+                                ${rubro.descripcion}
+                              </p>`
+                            : ""
+                    }
+
+                    <hr style="margin:20px 0">
+
+                    <div class="contenido-calculadora">
+
+                        <label>
+                            Tipo de revoque
+                        </label>
+
+                        <select
+                            class="selectorModuloDetalle"
+                            data-rubro-id="${rubro.id}"
+                        >
+
+                            <option value="">
+                                Seleccionar tipo...
+                            </option>
+
+                            ${modulos.map(modulo => `
+                                <option
+                                    value="${modulo.id}"
+                                    ${
+                                        rubro.moduloCalculo === modulo.id
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    ${modulo.nombre}
+                                </option>
+                            `).join("")}
+
+                        </select>
+
+                        ${
+                            moduloSeleccionado
+                                ? `
+
+                                    <div style="margin-top:20px">
+
+                                        <label>
+                                            Superficie
+                                        </label>
+
+                                        <div style="
+                                            display:flex;
+                                            align-items:center;
+                                            gap:10px;
+                                            margin-top:8px;
+                                        ">
+
+                                            <input
+                                                type="number"
+                                                class="superficieDetalle"
+                                                data-rubro-id="${rubro.id}"
+                                                min="0"
+                                                step="0.01"
+                                                value="${
+                                                    rubro.datos.superficie || ""
+                                                }"
+                                                placeholder="0,00"
+                                            >
+
+                                            <span>
+                                                ${moduloSeleccionado.unidad}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div style="margin-top:25px">
+
+                                        <h3>
+                                            Materiales necesarios
+                                        </h3>
+
+                                        ${
+                                            !isNaN(superficie) &&
+                                            superficie > 0
+
+                                                ?
+
+                                            moduloSeleccionado.materiales.map(
+                                                material => {
+
+                                                    const cantidad =
+                                                        material.cantidadPorUnidad *
+                                                        superficie;
+
+                                                    return `
+                                                        <div style="
+                                                            display:flex;
+                                                            justify-content:space-between;
+                                                            padding:10px 0;
+                                                            border-bottom:1px solid #eeeeee;
+                                                        ">
+
+                                                            <span>
+                                                                <strong>
+                                                                    ${material.nombre}
+                                                                </strong>
+                                                            </span>
+
+                                                            <span>
+                                                                ${cantidad.toFixed(2)}
+                                                                ${material.unidad}
+                                                            </span>
+
+                                                        </div>
+                                                    `;
+                                                }
+                                            ).join("")
+
+                                                :
+
+                                            `<p style="
+                                                color:#95a5a6;
+                                                margin-top:15px;
+                                            ">
+                                                Ingresá una superficie para calcular.
+                                            </p>`
+                                        }
+
+                                    </div>
+
+                                `
+
+                                :
+
+                                `
+                                    <p style="
+                                        margin-top:20px;
+                                        color:#95a5a6;
+                                    ">
+                                        Seleccioná el tipo de revoque para comenzar.
+                                    </p>
+                                `
+                        }
+
+                    </div>
+
+                </div>
+            `;
+
+            return;
         }
 
-        // -------------------------------------------------
-        // MOSTRAR RUBRO
-        // -------------------------------------------------
+
+        // =================================================
+        // OTROS RUBROS
+        // =================================================
 
         htmlRubros += `
-            <div class="detalle-rubro" style="margin-bottom:35px;">
+            <div class="detalle-rubro" style="margin-bottom:30px;">
 
                 <h3>${rubro.tipo}</h3>
 
@@ -563,142 +923,7 @@ function renderDetalle() {
                 <hr style="margin:20px 0">
 
                 <div class="contenido-calculadora">
-
-                    <label>
-                        Tipo de mampostería
-                    </label>
-
-                    <select
-                        class="selectorModuloDetalle"
-                        data-rubro-id="${rubro.id}"
-                    >
-
-                        <option value="">
-                            Seleccionar tipo...
-                        </option>
-
-                        ${modulosMamposteria.map(modulo => `
-                            <option
-                                value="${modulo.id}"
-                                ${
-                                    rubro.moduloCalculo === modulo.id
-                                        ? "selected"
-                                        : ""
-                                }
-                            >
-                                ${modulo.nombre}
-                            </option>
-                        `).join("")}
-
-                    </select>
-
-                    ${
-                        moduloSeleccionado
-                            ? `
-
-                                <div style="margin-top:20px">
-
-                                    <label>
-                                        Superficie
-                                    </label>
-
-                                    <div style="
-                                        display:flex;
-                                        align-items:center;
-                                        gap:10px;
-                                        margin-top:8px;
-                                    ">
-
-                                        <input
-                                            type="number"
-                                            class="superficieDetalle"
-                                            data-rubro-id="${rubro.id}"
-                                            min="0"
-                                            step="0.01"
-                                            value="${
-                                                rubro.datos.superficie || ""
-                                            }"
-                                            placeholder="0,00"
-                                        >
-
-                                        <span>
-                                            ${moduloSeleccionado.unidad}
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                                <div style="margin-top:25px">
-
-                                    <h3>
-                                        Materiales necesarios
-                                    </h3>
-
-                                    ${
-                                        !isNaN(superficie) &&
-                                        superficie > 0
-
-                                            ?
-
-                                        moduloSeleccionado.materiales.map(
-                                            material => {
-
-                                                const cantidad =
-                                                    material.cantidadPorUnidad *
-                                                    superficie;
-
-                                                return `
-                                                    <div style="
-                                                        display:flex;
-                                                        justify-content:space-between;
-                                                        padding:10px 0;
-                                                        border-bottom:1px solid #eeeeee;
-                                                    ">
-
-                                                        <span>
-                                                            <strong>
-                                                                ${material.nombre}
-                                                            </strong>
-                                                        </span>
-
-                                                        <span>
-                                                            ${cantidad.toFixed(2)}
-                                                            ${material.unidad}
-                                                        </span>
-
-                                                    </div>
-                                                `;
-
-                                            }
-                                        ).join("")
-
-                                            :
-
-                                        `<p style="
-                                            color:#95a5a6;
-                                            margin-top:15px;
-                                        ">
-                                            Ingresá una superficie para calcular.
-                                        </p>`
-                                    }
-
-                                </div>
-
-                            `
-
-                            :
-
-                            `
-                                <p style="
-                                    margin-top:20px;
-                                    color:#95a5a6;
-                                ">
-                                    Seleccioná el tipo de mampostería para comenzar.
-                                </p>
-                            `
-                    }
-
+                    <p>Calculadora próximamente.</p>
                 </div>
 
             </div>
@@ -706,11 +931,13 @@ function renderDetalle() {
 
     });
 
+
     // =====================================================
     // ACUMULADO GENERAL
     // =====================================================
 
-    const materiales = Object.entries(acumuladoMateriales);
+    const materiales =
+        Object.entries(acumuladoMateriales);
 
     let htmlAcumulado = "";
 
@@ -754,8 +981,8 @@ function renderDetalle() {
             </div>
 
         `;
-
     }
+
 
     // =====================================================
     // MOSTRAR TODO
@@ -765,6 +992,7 @@ function renderDetalle() {
         ${htmlRubros}
         ${htmlAcumulado}
     `;
+
 
     // =====================================================
     // EVENTOS DE LOS SELECTORES
@@ -780,14 +1008,17 @@ function renderDetalle() {
                     Number(selector.dataset.rubroId);
 
                 const rubro =
-                    sector.rubros.find(r => r.id === rubroId);
+                    sector.rubros.find(
+                        r => r.id === rubroId
+                    );
 
                 if (!rubro) return;
 
                 rubro.moduloCalculo =
                     selector.value || null;
 
-                rubro.datos = rubro.datos || {};
+                rubro.datos =
+                    rubro.datos || {};
 
                 rubro.datos.superficie = "";
 
@@ -798,6 +1029,7 @@ function renderDetalle() {
             });
 
         });
+
 
     // =====================================================
     // EVENTOS DE SUPERFICIE
@@ -813,7 +1045,9 @@ function renderDetalle() {
                     Number(input.dataset.rubroId);
 
                 const rubro =
-                    sector.rubros.find(r => r.id === rubroId);
+                    sector.rubros.find(
+                        r => r.id === rubroId
+                    );
 
                 if (!rubro) return;
 
