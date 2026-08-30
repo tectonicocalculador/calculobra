@@ -435,174 +435,6 @@ function renderRubros() {
 
 function renderDetalle() {
 
-    const rubro = obtenerRubro();
-
-    if (!rubro) {
-
-        contDetalle.innerHTML =
-            '<p class="mensaje-vacio">Seleccione un rubro para comenzar.</p>';
-
-        return;
-    }
-
-    // ==========================================
-    // SI EL RUBRO NO ES MAMPOSTERÍA
-    // ==========================================
-
-    if (rubro.calculadora !== "mamposteria") {
-
-        contDetalle.innerHTML = `
-            <h3>${rubro.tipo}</h3>
-
-            ${
-                rubro.descripcion
-                    ? `<p>${rubro.descripcion}</p>`
-                    : ""
-            }
-
-            <hr style="margin:20px 0">
-
-            <div class="contenido-calculadora">
-                <p>Calculadora próximamente.</p>
-            </div>
-        `;
-
-        return;
-    }
-
-    // ==========================================
-    // DATOS DEL RUBRO
-    // ==========================================
-
-    if (!rubro.datos) {
-        rubro.datos = {};
-    }
-
-    // ==========================================
-    // MÓDULOS DE MAMPOSTERÍA
-    // ==========================================
-
-    const modulosMamposteria = baseCalculos.filter(
-    modulo => modulo.categoria === "mamposterias"
-    );
-
-    // ==========================================
-    // MÓDULO SELECCIONADO
-    // ==========================================
-
-    const moduloSeleccionado =
-        modulosMamposteria.find(
-            modulo => modulo.id === rubro.moduloCalculo
-        );
-
-    // ==========================================
-    // MOSTRAR DETALLE
-    // ==========================================
-
-    contDetalle.innerHTML = `
-
-        <h3>${rubro.tipo}</h3>
-
-        ${
-            rubro.descripcion
-                ? `<p class="descripcion-detalle">
-                    ${rubro.descripcion}
-                   </p>`
-                : ""
-        }
-
-        <hr style="margin:20px 0">
-
-        <div class="contenido-calculadora">
-
-            <label>
-                Tipo de mampostería
-            </label>
-
-            <select id="selectorModulo">
-
-                <option value="">
-                    Seleccionar tipo...
-                </option>
-
-                ${modulosMamposteria.map(modulo => `
-                    <option
-                        value="${modulo.id}"
-                        ${rubro.moduloCalculo === modulo.id ? "selected" : ""}
-                    >
-                        ${modulo.nombre}
-                    </option>
-                `).join("")}
-
-            </select>
-
-            ${
-                moduloSeleccionado
-                    ? `
-                        <div style="margin-top:20px">
-
-                            <label>
-                                Superficie
-                            </label>
-
-                            <div style="
-                                display:flex;
-                                align-items:center;
-                                gap:10px;
-                                margin-top:8px;
-                            ">
-
-                                <input
-                                    type="number"
-                                    id="superficieMamposteria"
-                                    min="0"
-                                    step="0.01"
-                                    value="${rubro.datos.superficie || ""}"
-                                    placeholder="0,00"
-                                >
-
-                                <span>${moduloSeleccionado.unidad}</span>
-
-                            </div>
-
-                        </div>
-
-                        <div
-                            id="resultadoMamposteria"
-                            style="margin-top:25px"
-                        ></div>
-                    `
-                    : `
-                        <p style="
-                            margin-top:20px;
-                            color:#95a5a6;
-                        ">
-                            Seleccioná el tipo de mampostería para comenzar.
-                        </p>
-                    `
-            }
-
-        </div>
-    `;
-
-    // ==========================================
-    // CAMBIO DE MÓDULO
-    // ==========================================
-
-    const selectorModulo =
-        document.getElementById("selectorModulo");
-
-    selectorModulo.addEventListener("change", () => {
-
-        rubro.moduloCalculo =
-            selectorModulo.value || null;
-
-        rubro.datos.superficie = "";
-
-        guardarObra();
-
-        function renderDetalle() {
-
     const sector = obtenerSector(sectorSeleccionadoId);
 
     if (!sector) {
@@ -646,7 +478,7 @@ function renderDetalle() {
                         rubro.descripcion
                             ? `<p class="descripcion-detalle">
                                 ${rubro.descripcion}
-                               </p>`
+                              </p>`
                             : ""
                     }
 
@@ -724,7 +556,7 @@ function renderDetalle() {
                     rubro.descripcion
                         ? `<p class="descripcion-detalle">
                             ${rubro.descripcion}
-                           </p>`
+                          </p>`
                         : ""
                 }
 
@@ -804,7 +636,6 @@ function renderDetalle() {
                                     </h3>
 
                                     ${
-
                                         !isNaN(superficie) &&
                                         superficie > 0
 
@@ -832,7 +663,7 @@ function renderDetalle() {
                                                         </span>
 
                                                         <span>
-                                                            ${cantidad}
+                                                            ${cantidad.toFixed(2)}
                                                             ${material.unidad}
                                                         </span>
 
@@ -850,7 +681,6 @@ function renderDetalle() {
                                         ">
                                             Ingresá una superficie para calcular.
                                         </p>`
-
                                     }
 
                                 </div>
@@ -873,6 +703,7 @@ function renderDetalle() {
 
             </div>
         `;
+
     });
 
     // =====================================================
