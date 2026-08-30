@@ -1,10 +1,14 @@
 // =====================================================
 // CALCULOBRA | TECTONICO
 // baseCalculos.js
-// MAMPOSTERÍA
+// MAMPOSTERÍA + REVOQUES
 // =====================================================
 
 const baseCalculos = [
+
+    // =====================================================
+    // MAMPOSTERÍAS
+    // =====================================================
 
     {
         id: "tabique_de_canto_ladrillo_comun_24x11x5cm_junta_1_5cm",
@@ -390,6 +394,142 @@ const baseCalculos = [
                 unidad: "unidades",
                 resultadoPorUnidad: 8,
                 unidadCompra: "unidades"
+            }
+        ]
+    },
+
+    // =====================================================
+    // REVOQUES Y MORTEROS DE PARED
+    // =====================================================
+
+    {
+        id: "azotado_hidrofugo_1cm",
+        categoria: "revoques",
+        tipoRevoque: "azotado_hidrofugo",
+        nombre: "Azotado hidrófugo - espesor 1 cm",
+        unidad: "m2",
+
+        materiales: [
+            {
+                nombre: "cemento",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 5.4,
+                unidad: "kg",
+                resultadoPorUnidad: 0.216,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "arena",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.012,
+                unidad: "m3",
+                resultadoPorUnidad: 0.012,
+                unidadCompra: "m3"
+            },
+            {
+                nombre: "hidrofugo",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.25,
+                unidad: "litros",
+                resultadoPorUnidad: 0.05,
+                unidadCompra: "sachet de 5 litros"
+            }
+        ]
+    },
+
+    {
+        id: "revoque_grueso_1_5cm",
+        categoria: "revoques",
+        tipoRevoque: "revoque_grueso",
+        nombre: "Revoque grueso - espesor 1,5 cm",
+        unidad: "m2",
+
+        materiales: [
+            {
+                nombre: "cal",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 3.6,
+                unidad: "kg",
+                resultadoPorUnidad: 0.144,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "cemento",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 1.85,
+                unidad: "kg",
+                resultadoPorUnidad: 0.074,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "arena",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.017,
+                unidad: "m3",
+                resultadoPorUnidad: 0.017,
+                unidadCompra: "m3"
+            }
+        ]
+    },
+
+    {
+        id: "revoque_grueso_cemento_albanileria_1cm",
+        categoria: "revoques",
+        tipoRevoque: "revoque_grueso",
+        nombre: "Revoque grueso con cemento albañilería - espesor 1 cm",
+        unidad: "m2",
+
+        materiales: [
+            {
+                nombre: "cemento albañileria",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 3.8,
+                unidad: "kg",
+                resultadoPorUnidad: 0.152,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "arena",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.02,
+                unidad: "m3",
+                resultadoPorUnidad: 0.02,
+                unidadCompra: "m3"
+            }
+        ]
+    },
+
+    {
+        id: "revoque_fino_1_2cm",
+        categoria: "revoques",
+        tipoRevoque: "revoque_fino",
+        nombre: "Revoque fino - espesor 1/2 cm",
+        unidad: "m2",
+
+        materiales: [
+            {
+                nombre: "cal",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 1.6,
+                unidad: "kg",
+                resultadoPorUnidad: 0.064,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "cemento",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.45,
+                unidad: "kg",
+                resultadoPorUnidad: 0.018,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "arena",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.006,
+                unidad: "m3",
+                resultadoPorUnidad: 0.006,
+                unidadCompra: "m3"
             }
         ]
     }
