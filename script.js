@@ -143,13 +143,17 @@ function cargarCatalogo() {
     }
 
     sector.rubros.push({
-                    id: generarId(),
-                    tipo: r.nombre,
-                    descripcion: "",
-                    calculadora: r.calculadora,
-                    moduloCalculo: null,
-                    datos: {}
-                });
+    id: generarId(),
+    tipo: r.nombre,
+    descripcion: "",
+    calculadora:
+        r.calculadora ||
+        (r.categoria === "mamposterias" ? "mamposteria" :
+         r.categoria === "revoques" ? r.tipoRevoque :
+         null),
+    moduloCalculo: null,
+    datos: {}
+});
 
                 guardarObra();
 
