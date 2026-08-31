@@ -1057,7 +1057,25 @@ document
 
             guardarObra();
 
+            const posicionCursor = input.selectionStart;
+
             renderDetalle();
+
+            const nuevoInput =
+                document.querySelector(
+                    `.superficieDetalle[data-rubro-id="${rubroId}"]`
+                );
+
+            if (nuevoInput) {
+
+                nuevoInput.focus();
+
+                nuevoInput.setSelectionRange(
+                    posicionCursor,
+                    posicionCursor
+                );
+
+            }
 
         });
 
