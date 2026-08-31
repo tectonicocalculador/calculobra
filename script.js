@@ -483,7 +483,7 @@ function renderDetalle() {
                 );
 
             const superficie =
-                parseFloat(rubro.datos.superficie);
+    parseFloat(String(rubro.datos.superficie).replace(",", "."));
 
             // ---------------------------------------------
             // SUMAR AL ACUMULADO
@@ -581,7 +581,7 @@ function renderDetalle() {
                                         ">
 
                                             <input
-                                                type="number"
+                                                type="text"
                                                 class="superficieDetalle"
                                                 data-rubro-id="${rubro.id}"
                                                 min="0"
@@ -706,7 +706,7 @@ function renderDetalle() {
                 );
 
             const superficie =
-                parseFloat(rubro.datos.superficie);
+    parseFloat(String(rubro.datos.superficie).replace(",", "."));
 
             // ---------------------------------------------
             // SUMAR AL ACUMULADO
@@ -804,7 +804,7 @@ function renderDetalle() {
                                         ">
 
                                             <input
-                                                type="number"
+                                                type="text"
                                                 class="superficieDetalle"
                                                 data-rubro-id="${rubro.id}"
                                                 min="0"
