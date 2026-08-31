@@ -534,4 +534,68 @@ const baseCalculos = [
         ]
     }
 
+      // =====================================================
+    // CARPETAS
+    // =====================================================
+
+    {
+        id: "carpeta_cementicia_2cm",
+        categoria: "carpetas",
+        nombre: "Carpeta cementicia - espesor 2 cm",
+        unidad: "m2",
+
+        materiales: [
+            {
+                nombre: "cemento",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 10.8,
+                unidad: "kg",
+                resultadoPorUnidad: 0.432,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "arena",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.024,
+                unidad: "m3",
+                resultadoPorUnidad: 0.024,
+                unidadCompra: "m3"
+            }
+        ]
+    },
+
+    {
+        id: "carpeta_hidrofuga_nivelacion_2cm",
+        categoria: "carpetas",
+        nombre: "Carpeta hidrófuga o para nivelación - espesor 2 cm",
+        unidad: "m2",
+
+        materiales: [
+            {
+                nombre: "cemento",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 10.8,
+                unidad: "kg",
+                resultadoPorUnidad: 0.432,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "arena",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.024,
+                unidad: "m3",
+                resultadoPorUnidad: 0.024,
+                unidadCompra: "m3"
+            },
+            {
+                nombre: "hidrofugo",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.5,
+                unidad: "litros",
+                resultadoPorUnidad: 0.1,
+                unidadCompra: "sachet de 5 litros"
+            }
+        ]
+    }  
+    
 ];
