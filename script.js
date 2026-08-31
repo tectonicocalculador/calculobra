@@ -468,6 +468,17 @@ function renderDetalle() {
 
     sector.rubros.forEach(rubro => {
 
+// =================================================
+// NORMALIZAR CALCULADORA DEL RUBRO
+// =================================================
+
+if (
+    rubro.tipo &&
+    rubro.tipo.toLowerCase() === "carpeta"
+) {
+    rubro.calculadora = "carpeta";
+}
+
         // =================================================
         // MAMPOSTERÍA
         // =================================================
