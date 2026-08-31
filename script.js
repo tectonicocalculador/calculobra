@@ -1033,42 +1033,33 @@ function renderDetalle() {
     // EVENTOS DE SUPERFICIE
     // =====================================================
 
-    document
-        .querySelectorAll(".superficieDetalle")
-        .forEach(input => {
+document
+    .querySelectorAll(".superficieDetalle")
+    .forEach(input => {
 
-            input.addEventListener("input", () => {
+        input.addEventListener("input", () => {
 
-                const rubroId =
-                    Number(input.dataset.rubroId);
+            const rubroId =
+                Number(input.dataset.rubroId);
 
-                const rubro =
-                    sector.rubros.find(
-                        r => r.id === rubroId
-                    );
+            const rubro =
+                sector.rubros.find(
+                    r => r.id === rubroId
+                );
 
-                if (!rubro) return;
+            if (!rubro) return;
 
-                const valor =
-                    parseFloat(input.value);
+            rubro.datos =
+                rubro.datos || {};
 
-                if (isNaN(valor)) {
+            rubro.datos.superficie =
+                input.value;
 
-                    rubro.datos.superficie = "";
-
-                } else {
-
-                    rubro.datos.superficie = valor;
-
-                }
-
-                guardarObra();
-
-                renderDetalle();
-
-            });
+            guardarObra();
 
         });
+
+    });
 
 }
 
