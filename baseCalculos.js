@@ -532,7 +532,7 @@ const baseCalculos = [
                 unidadCompra: "m3"
             }
         ]
-    }
+    },
 
       // =====================================================
     // CARPETAS
