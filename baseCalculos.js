@@ -595,7 +595,53 @@ const baseCalculos = [
                 resultadoPorUnidad: 0.1,
                 unidadCompra: "sachet de 5 litros"
             }
+        ] 
+    },
+
+    // =====================================================
+    // HORMIGÓN
+    // =====================================================
+
+    {
+        id: "hormigon_armado",
+        categoria: "hormigon",
+        nombre: "Hormigón armado",
+        unidad: "m3",
+
+        materiales: [
+            {
+                nombre: "cemento",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 300,
+                unidad: "kg",
+                resultadoPorUnidad: 12,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "arena",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.65,
+                unidad: "m3",
+                resultadoPorUnidad: 0.65,
+                unidadCompra: "m3"
+            },
+            {
+                nombre: "piedra",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.65,
+                unidad: "m3",
+                resultadoPorUnidad: 0.65,
+                unidadCompra: "m3"
+            },
+            {
+                nombre: "hierro",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0,
+                unidad: "manual",
+                resultadoPorUnidad: 0,
+                unidadCompra: "cálculo manual"
+            }
         ]
-    }  
+    }
     
 ];
