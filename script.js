@@ -1483,8 +1483,62 @@ document
 
     });
 
-}
 
+    // =====================================================
+    // EVENTOS DE VOLUMEN
+    // =====================================================
+
+    document
+        .querySelectorAll(".volumenDetalle")
+        .forEach(input => {
+
+            input.addEventListener("input", () => {
+
+                const rubroId =
+                    Number(input.dataset.rubroId);
+
+                const rubro =
+                    sector.rubros.find(
+                        r => r.id === rubroId
+                    );
+
+                if (!rubro) return;
+
+                rubro.datos =
+                    rubro.datos || {};
+
+                rubro.datos.volumen =
+                    input.value;
+
+                guardarObra();
+
+                const posicionCursor =
+                    input.selectionStart;
+
+                renderDetalle();
+
+                const nuevoInput =
+                    document.querySelector(
+                        `.volumenDetalle[data-rubro-id="${rubroId}"]`
+                    );
+
+                if (nuevoInput) {
+
+                    nuevoInput.focus();
+
+                    nuevoInput.setSelectionRange(
+                        posicionCursor,
+                        posicionCursor
+                    );
+
+                }
+
+            });
+
+        });
+    
+}
+    
 function mostrarResultadoMamposteria(modulo, superficie) {
 
     const contenedor = document.getElementById("resultadoMamposteria");
