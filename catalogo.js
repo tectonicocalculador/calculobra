@@ -38,6 +38,14 @@ const catalogoRubros = [
         categoria: "Albañilería",
         calculadora: "azotado_hidrofugo"
     },
+    
+    {
+        id: 12,
+        icono: "🏗️",
+        nombre: "Hormigón",
+        categoria: "Hormigón",
+        calculadora: "hormigon"
+    },
 
     // PISOS
 
