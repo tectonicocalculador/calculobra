@@ -153,7 +153,7 @@ function cargarCatalogo() {
      r.categoria === "carpetas" ? "carpeta" :
 r.categoria === "morteros_pisos" ? "mortero_pisos" :
 r.categoria === "hormigon" ? "hormigon" :
-null
+null,
     moduloCalculo: null,
     datos: {}
 });
