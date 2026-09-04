@@ -1183,7 +1183,7 @@ if (rubro.calculadora === "mortero_pisos") {
         acumuladoMateriales[material.nombre].cantidad += cantidad;
     });
 
-    contDetalle.innerHTML += `
+    htmlRubros += `
         <div class="bloqueRubro">
 
             <label>Tipo de mortero para pisos:</label>
