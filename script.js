@@ -1183,54 +1183,157 @@ if (rubro.calculadora === "mortero_pisos") {
         acumuladoMateriales[material.nombre].cantidad += cantidad;
     });
 
-    htmlRubros += `
-        <div class="bloqueRubro">
+htmlRubros += `
+    <div class="detalle-rubro" style="margin-bottom:35px;">
 
-            <label>Tipo de mortero para pisos:</label>
+        <h3>${rubro.tipo}</h3>
 
-            <select class="selectorModuloDetalle"
-                    data-rubro-id="${rubro.id}">
+        ${
+            rubro.descripcion
+                ? `<p class="descripcion-detalle">
+                    ${rubro.descripcion}
+                  </p>`
+                : ""
+        }
+
+        <hr style="margin:20px 0">
+
+        <div class="contenido-calculadora">
+
+            <label>
+                Tipo de mortero para pisos
+            </label>
+
+            <select
+                class="selectorModuloDetalle"
+                data-rubro-id="${rubro.id}"
+            >
 
                 ${modulos.map(modulo => `
-                    <option value="${modulo.id}"
-                        ${modulo.id === rubro.moduloCalculo ? "selected" : ""}>
+                    <option
+                        value="${modulo.id}"
+                        ${
+                            rubro.moduloCalculo === modulo.id
+                                ? "selected"
+                                : ""
+                        }
+                    >
                         ${modulo.nombre}
                     </option>
                 `).join("")}
 
             </select>
 
-            <label>Superficie (m²):</label>
+            ${
+                moduloSeleccionado
+                    ? `
 
-            <input
-                type="text"
-                inputmode="decimal"
-                class="superficieDetalle"
-                data-rubro-id="${rubro.id}"
-                value="${rubro.datos.superficie || ""}"
-                placeholder="Ej: 100"
-            >
+                        <div style="margin-top:20px">
 
-            <div class="materialesRubro">
+                            <label>
+                                Superficie
+                            </label>
 
-                ${moduloSeleccionado.materiales.map(material => {
+                            <div style="
+                                display:flex;
+                                align-items:center;
+                                gap:10px;
+                                margin-top:8px;
+                            ">
 
-                    const cantidad = superficie * material.cantidadPorUnidad;
+                                <input
+                                    type="text"
+                                    class="superficieDetalle"
+                                    data-rubro-id="${rubro.id}"
+                                    min="0"
+                                    step="0.01"
+                                    value="${
+                                        rubro.datos.superficie || ""
+                                    }"
+                                    placeholder="0,00"
+                                >
 
-                    return `
-                        <div>
-                            <strong>${material.nombre}:</strong>
-                            ${cantidad.toFixed(2)}
-                            ${material.unidad}
+                                <span>
+                                    ${moduloSeleccionado.unidad}
+                                </span>
+
+                            </div>
+
                         </div>
-                    `;
 
-                }).join("")}
+                        <div style="margin-top:25px">
 
-            </div>
+                            <h3>
+                                Materiales necesarios
+                            </h3>
+
+                            ${
+                                !isNaN(superficie) &&
+                                superficie > 0
+
+                                    ?
+
+                                    moduloSeleccionado.materiales.map(
+                                        material => {
+
+                                            const cantidad =
+                                                material.cantidadPorUnidad *
+                                                superficie;
+
+                                            return `
+                                                <div style="
+                                                    display:flex;
+                                                    justify-content:space-between;
+                                                    padding:10px 0;
+                                                    border-bottom:1px solid #eeeeee;
+                                                ">
+
+                                                    <span>
+                                                        <strong>
+                                                            ${material.nombre}
+                                                        </strong>
+                                                    </span>
+
+                                                    <span>
+                                                        ${cantidad.toFixed(2)}
+                                                        ${material.unidad}
+                                                    </span>
+
+                                                </div>
+                                            `;
+                                        }
+                                    ).join("")
+
+                                    :
+
+                                    `<p style="
+                                        color:#95a5a6;
+                                        margin-top:15px;
+                                    ">
+                                        Ingresá una superficie para calcular.
+                                    </p>`
+                            }
+
+                        </div>
+
+                    `
+
+                    :
+
+                    `
+                        <p style="
+                            margin-top:20px;
+                            color:#95a5a6;
+                        ">
+                            Seleccioná el tipo de mortero para comenzar.
+                        </p>
+                    `
+            }
 
         </div>
-    `;
+
+    </div>
+`;
 
     return;
 }
