@@ -1171,7 +1171,7 @@ if (rubro.calculadora === "mortero_pisos") {
 
     moduloSeleccionado.materiales.forEach(material => {
 
-        const cantidad = superficie * material.resultadoPorUnidad;
+    const cantidad = superficie * material.cantidadPorUnidad;
 
         if (!acumuladoMateriales[material.nombre]) {
             acumuladoMateriales[material.nombre] = {
@@ -1215,7 +1215,7 @@ if (rubro.calculadora === "mortero_pisos") {
 
                 ${moduloSeleccionado.materiales.map(material => {
 
-                    const cantidad = superficie * material.resultadoPorUnidad;
+                    const cantidad = superficie * material.cantidadPorUnidad;
 
                     return `
                         <div>
