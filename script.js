@@ -1134,6 +1134,107 @@ if (rubro.calculadora === "carpeta") {
     return;
 }
 
+// =================================================
+// MORTEROS PARA PISOS
+// =================================================
+if (rubro.calculadora === "mortero_pisos") {
+
+    rubro.datos = rubro.datos || {};
+
+    const modulos = baseCalculos.filter(
+        modulo => modulo.categoria === "morteros_pisos"
+    );
+
+    if (modulos.length === 0) {
+        contDetalle.innerHTML += `
+            <p>No hay cálculos disponibles para este rubro.</p>
+        `;
+        return;
+    }
+
+    let moduloSeleccionado = modulos.find(
+        modulo => modulo.id === rubro.moduloCalculo
+    );
+
+    if (!moduloSeleccionado) {
+        moduloSeleccionado = modulos[0];
+        rubro.moduloCalculo = moduloSeleccionado.id;
+    }
+
+    let superficie = parseFloat(
+        (rubro.datos.superficie || "").toString().replace(",", ".")
+    );
+
+    if (isNaN(superficie)) {
+        superficie = 0;
+    }
+
+    moduloSeleccionado.materiales.forEach(material => {
+
+        const cantidad = superficie * material.resultadoPorUnidad;
+
+        if (!acumuladoMateriales[material.nombre]) {
+            acumuladoMateriales[material.nombre] = {
+                cantidad: 0,
+                unidadCompra: material.unidadCompra
+            };
+        }
+
+        acumuladoMateriales[material.nombre].cantidad += cantidad;
+    });
+
+    contDetalle.innerHTML += `
+        <div class="bloqueRubro">
+
+            <label>Tipo de mortero para pisos:</label>
+
+            <select class="selectorModuloDetalle"
+                    data-rubro-id="${rubro.id}">
+
+                ${modulos.map(modulo => `
+                    <option value="${modulo.id}"
+                        ${modulo.id === rubro.moduloCalculo ? "selected" : ""}>
+                        ${modulo.nombre}
+                    </option>
+                `).join("")}
+
+            </select>
+
+            <label>Superficie (m²):</label>
+
+            <input
+                type="text"
+                inputmode="decimal"
+                class="superficieDetalle"
+                data-rubro-id="${rubro.id}"
+                value="${rubro.datos.superficie || ""}"
+                placeholder="Ej: 100"
+            >
+
+            <div class="materialesRubro">
+
+                ${moduloSeleccionado.materiales.map(material => {
+
+                    const cantidad = superficie * material.resultadoPorUnidad;
+
+                    return `
+                        <div>
+                            <strong>${material.nombre}:</strong>
+                            ${cantidad.toFixed(2)}
+                            ${material.unidadCompra}
+                        </div>
+                    `;
+
+                }).join("")}
+
+            </div>
+
+        </div>
+    `;
+
+    return;
+}
+        
         // =================================================
 // HORMIGÓN
 // =================================================
