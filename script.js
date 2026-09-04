@@ -1176,7 +1176,7 @@ if (rubro.calculadora === "mortero_pisos") {
         if (!acumuladoMateriales[material.nombre]) {
             acumuladoMateriales[material.nombre] = {
                 cantidad: 0,
-                unidadCompra: material.unidadCompra
+                unidad: material.unidad
             };
         }
 
@@ -1221,7 +1221,7 @@ if (rubro.calculadora === "mortero_pisos") {
                         <div>
                             <strong>${material.nombre}:</strong>
                             ${cantidad.toFixed(2)}
-                            ${material.unidadCompra}
+                            ${material.unidad}
                         </div>
                     `;
 
