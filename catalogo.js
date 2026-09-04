@@ -49,21 +49,29 @@ const catalogoRubros = [
 
     // PISOS
 
-    {
-        id: 4,
-        icono: "🏗️",
-        nombre: "Contrapiso",
-        categoria: "Pisos",
-        calculadora: "contrapiso"
-    },
+{
+    id: 4,
+    icono: "🏗️",
+    nombre: "Contrapiso",
+    categoria: "Pisos",
+    calculadora: "contrapiso"
+},
 
-    {
-        id: 5,
-        icono: "🧱",
-        nombre: "Carpeta",
-        categoria: "Pisos",
-        calculadora: "carpeta"
-    },
+{
+    id: 13,
+    icono: "🧱",
+    nombre: "Morteros para pisos",
+    categoria: "Pisos",
+    calculadora: "mortero_pisos"
+},
+
+{
+    id: 5,
+    icono: "🧱",
+    nombre: "Carpeta",
+    categoria: "Pisos",
+    calculadora: "carpeta"
+},
 
     {
         id: 6,
