@@ -534,6 +534,45 @@ const baseCalculos = [
         ]
     },
 
+    // =====================================================
+    // MORTEROS PARA PISOS
+    // =====================================================
+
+    {
+        id: "mortero_colocacion_mosaicos_baldosas_2_5cm",
+        categoria: "morteros_pisos",
+        nombre: "Colocación de mosaicos y baldosas - espesor 2,5 cm",
+        unidad: "m2",
+
+        materiales: [
+            {
+                nombre: "cal aerea",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 5.9,
+                unidad: "kg",
+                resultadoPorUnidad: 0.236,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "cemento",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 3.1,
+                unidad: "kg",
+                resultadoPorUnidad: 0.124,
+                unidadCompra: "bolsa de 25kg"
+            },
+            {
+                nombre: "arena",
+                datoEntradaPorUnidad: 1,
+                cantidadPorUnidad: 0.03,
+                unidad: "m3",
+                resultadoPorUnidad: 0.03,
+                unidadCompra: "m3"
+            }
+        ]
+    },
+
+    
       // =====================================================
     // CARPETAS
     // =====================================================
