@@ -4,6 +4,7 @@
 // =====================================================
 
 const obra = JSON.parse(localStorage.getItem("calculobra")) || {
+    nombre: "",
     sectores: []
 };
 
