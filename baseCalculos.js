@@ -591,7 +591,6 @@ const baseCalculos = [
     resultadoPorUnidad: 81,
     unidadCompra: "kg"
 },
-            },
             {
     nombre: "cemento",
     datoEntradaPorUnidad: 1,
@@ -599,7 +598,6 @@ const baseCalculos = [
     unidad: "kg",
     resultadoPorUnidad: 38.4,
     unidadCompra: "kg"
-},
             },
             {
                 nombre: "arena",
