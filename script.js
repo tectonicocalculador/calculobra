@@ -16,6 +16,7 @@ let rubroSeleccionadoId = null;
 const contSectores = document.getElementById("sectores");
 const contRubros = document.getElementById("rubros");
 const contDetalle = document.getElementById("detalle");
+const nombreObra = document.getElementById("nombreObra");
 
 const modal = document.getElementById("modalCatalogo");
 const listaCatalogo = document.getElementById("listaCatalogo");
