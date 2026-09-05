@@ -631,7 +631,7 @@ const baseCalculos = [
                 cantidadPorUnidad: 105,
                 unidad: "kg",
                 resultadoPorUnidad: 4.2,
-                unidadCompra: "bolsa de 25kg"
+                unidadCompra: "kg"
             },
             {
                 nombre: "arena",
