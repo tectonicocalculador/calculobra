@@ -149,11 +149,12 @@ function cargarCatalogo() {
     calculadora:
     r.calculadora ||
     (r.categoria === "mamposterias" ? "mamposteria" :
-     r.categoria === "revoques" ? r.tipoRevoque :
-     r.categoria === "carpetas" ? "carpeta" :
-r.categoria === "morteros_pisos" ? "mortero_pisos" :
-r.categoria === "hormigon" ? "hormigon" :
-null),
+ r.categoria === "revoques" ? r.tipoRevoque :
+ r.categoria === "carpetas" ? "carpeta" :
+ r.categoria === "morteros_pisos" ? "mortero_pisos" :
+ r.categoria === "cimientos" ? "cimientos" :
+ r.categoria === "hormigon" ? "hormigon" :
+ null),
     moduloCalculo: null,
     datos: {}
 });
