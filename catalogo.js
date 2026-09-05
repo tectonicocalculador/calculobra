@@ -47,6 +47,14 @@ const catalogoRubros = [
         calculadora: "hormigon"
     },
 
+    {
+    id: 14,
+    icono: "🏗️",
+    nombre: "Cimientos",
+    categoria: "Cimientos",
+    calculadora: "cimientos"
+},
+
     // PISOS
 
 {
