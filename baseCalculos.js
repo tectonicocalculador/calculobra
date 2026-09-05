@@ -651,6 +651,86 @@ const baseCalculos = [
             }
         ]
     },
+
+    // =====================================================
+// CONTRAPISOS
+// =====================================================
+
+{
+    id: "contrapiso_usando_cal",
+    categoria: "contrapisos",
+    nombre: "Contrapiso usando cal",
+    unidad: "m3",
+
+    materiales: [
+        {
+            nombre: "cal",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 81,
+            unidad: "kg",
+            resultadoPorUnidad: 81,
+            unidadCompra: "kg"
+        },
+        {
+            nombre: "cemento",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 38.4,
+            unidad: "kg",
+            resultadoPorUnidad: 38.4,
+            unidadCompra: "kg"
+        },
+        {
+            nombre: "arena",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 0.515,
+            unidad: "m3",
+            resultadoPorUnidad: 0.515,
+            unidadCompra: "m3"
+        },
+        {
+            nombre: "cascote",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 0.77,
+            unidad: "m3",
+            resultadoPorUnidad: 0.77,
+            unidadCompra: "m3"
+        }
+    ]
+},
+
+{
+    id: "contrapiso_usando_cemento_albanileria",
+    categoria: "contrapisos",
+    nombre: "Contrapiso usando cemento de albañilería",
+    unidad: "m3",
+
+    materiales: [
+        {
+            nombre: "cemento albañileria",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 105,
+            unidad: "kg",
+            resultadoPorUnidad: 4.2,
+            unidadCompra: "kg"
+        },
+        {
+            nombre: "arena",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 0.45,
+            unidad: "m3",
+            resultadoPorUnidad: 0.45,
+            unidadCompra: "m3"
+        },
+        {
+            nombre: "cascote",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 0.9,
+            unidad: "m3",
+            resultadoPorUnidad: 0.9,
+            unidadCompra: "m3"
+        }
+    ]
+},
     
       // =====================================================
     // CARPETAS
