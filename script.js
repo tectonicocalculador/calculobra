@@ -1726,6 +1726,212 @@ if (rubro.calculadora === "cimientos") {
 // =================================================
 
 if (rubro.calculadora === "contrapiso") {
+
+    if (!rubro.datos) {
+        rubro.datos = {};
+    }
+
+    const modulos = baseCalculos.filter(
+        modulo => modulo.categoria === "contrapisos"
+    );
+
+    const moduloSeleccionado =
+        modulos.find(
+            modulo => modulo.id === rubro.moduloCalculo
+        );
+
+    const volumen =
+        parseFloat(
+            String(rubro.datos.volumen).replace(",", ".")
+        );
+
+    // ---------------------------------------------
+    // SUMAR AL ACUMULADO
+    // ---------------------------------------------
+
+    if (
+        moduloSeleccionado &&
+        !isNaN(volumen) &&
+        volumen > 0
+    ) {
+
+        moduloSeleccionado.materiales.forEach(material => {
+
+            const cantidad =
+                material.cantidadPorUnidad * volumen;
+
+            if (!acumuladoMateriales[material.nombre]) {
+                acumuladoMateriales[material.nombre] = {
+                    cantidad: 0,
+                    unidad: material.unidad
+                };
+            }
+
+            acumuladoMateriales[material.nombre].cantidad += cantidad;
+
+        });
+    }
+
+    // ---------------------------------------------
+    // MOSTRAR CONTRAPISO
+    // ---------------------------------------------
+
+    htmlRubros += `
+        <div class="detalle-rubro" style="margin-bottom:35px;">
+
+            <h3>${rubro.tipo}</h3>
+
+            ${
+                rubro.descripcion
+                    ? `<p class="descripcion-detalle">
+                        ${rubro.descripcion}
+                      </p>`
+                    : ""
+            }
+
+            <hr style="margin:20px 0">
+
+            <div class="contenido-calculadora">
+
+                <label>
+                    Tipo de contrapiso
+                </label>
+
+                <select
+                    class="selectorModuloDetalle"
+                    data-rubro-id="${rubro.id}"
+                >
+
+                    <option value="">
+                        Seleccionar tipo...
+                    </option>
+
+                    ${modulos.map(modulo => `
+                        <option
+                            value="${modulo.id}"
+                            ${
+                                rubro.moduloCalculo === modulo.id
+                                    ? "selected"
+                                    : ""
+                            }
+                        >
+                            ${modulo.nombre}
+                        </option>
+                    `).join("")}
+
+                </select>
+
+                ${
+                    moduloSeleccionado
+                        ? `
+
+                            <div style="margin-top:20px">
+
+                                <label>
+                                    Volumen
+                                </label>
+
+                                <div style="
+                                    display:flex;
+                                    align-items:center;
+                                    gap:10px;
+                                    margin-top:8px;
+                                ">
+
+                                    <input
+                                        type="text"
+                                        class="volumenDetalle"
+                                        data-rubro-id="${rubro.id}"
+                                        value="${
+                                            rubro.datos.volumen || ""
+                                        }"
+                                        placeholder="0,00"
+                                    >
+
+                                    <span>
+                                        m³
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div style="margin-top:25px">
+
+                                <h3>
+                                    Materiales necesarios
+                                </h3>
+
+                                ${
+                                    !isNaN(volumen) &&
+                                    volumen > 0
+
+                                        ?
+
+                                    moduloSeleccionado.materiales.map(
+                                        material => {
+
+                                            const cantidad =
+                                                material.cantidadPorUnidad *
+                                                volumen;
+
+                                            return `
+                                                <div style="
+                                                    display:flex;
+                                                    justify-content:space-between;
+                                                    padding:10px 0;
+                                                    border-bottom:1px solid #eeeeee;
+                                                ">
+
+                                                    <span>
+                                                        <strong>
+                                                            ${material.nombre}
+                                                        </strong>
+                                                    </span>
+
+                                                    <span>
+                                                        ${cantidad.toFixed(2)}
+                                                        ${material.unidad}
+                                                    </span>
+
+                                                </div>
+                                            `;
+                                        }
+                                    ).join("")
+
+                                        :
+
+                                    `<p style="
+                                        color:#95a5a6;
+                                        margin-top:15px;
+                                    ">
+                                        Ingresá un volumen para calcular.
+                                    </p>`
+                                }
+
+                            </div>
+
+                        `
+
+                        :
+
+                        `
+                            <p style="
+                                margin-top:20px;
+                                color:#95a5a6;
+                            ">
+                                Seleccioná el tipo de contrapiso para comenzar.
+                            </p>
+                        `
+                }
+
+            </div>
+
+        </div>
+    `;
+
+    return;
+}
         
 
 // =================================================
