@@ -17,6 +17,21 @@ const contSectores = document.getElementById("sectores");
 const contRubros = document.getElementById("rubros");
 const contDetalle = document.getElementById("detalle");
 const nombreObra = document.getElementById("nombreObra");
+nombreObra.onclick = () => {
+
+    const nuevoNombre = prompt(
+        "Nombre de la obra:",
+        obra.nombre || ""
+    );
+
+    if (nuevoNombre === null) return;
+
+    obra.nombre = nuevoNombre.trim() || "Sin nombre";
+
+    guardarObra();
+
+    nombreObra.textContent = obra.nombre;
+};
 
 const modal = document.getElementById("modalCatalogo");
 const listaCatalogo = document.getElementById("listaCatalogo");
