@@ -584,20 +584,22 @@ const baseCalculos = [
 
         materiales: [
             {
-                nombre: "cal",
-                datoEntradaPorUnidad: 1,
-                cantidadPorUnidad: 81,
-                unidad: "kg",
-                resultadoPorUnidad: 3.24,
-                unidadCompra: "bolsa de 25kg"
+    nombre: "cal",
+    datoEntradaPorUnidad: 1,
+    cantidadPorUnidad: 81,
+    unidad: "kg",
+    resultadoPorUnidad: 81,
+    unidadCompra: "kg"
+},
             },
             {
-                nombre: "cemento",
-                datoEntradaPorUnidad: 1,
-                cantidadPorUnidad: 38.4,
-                unidad: "kg",
-                resultadoPorUnidad: 1.536,
-                unidadCompra: "bolsa de 25kg"
+    nombre: "cemento",
+    datoEntradaPorUnidad: 1,
+    cantidadPorUnidad: 38.4,
+    unidad: "kg",
+    resultadoPorUnidad: 38.4,
+    unidadCompra: "kg"
+},
             },
             {
                 nombre: "arena",
