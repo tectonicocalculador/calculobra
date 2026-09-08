@@ -3,13 +3,51 @@
 // script.js - Versión 1.1
 // =====================================================
 
-const obra = JSON.parse(localStorage.getItem("calculobra")) || {
-    nombre: "",
-    sectores: []
-};
+// =====================================================
+// SISTEMA DE OBRAS
+// =====================================================
+
+let obras = JSON.parse(localStorage.getItem("calculobra_obras"));
+
+if (!obras) {
+
+    const obraActual =
+        JSON.parse(localStorage.getItem("calculobra"));
+
+    if (obraActual) {
+
+        obras = [{
+            id: generarId(),
+            nombre: obraActual.nombre || "Sin nombre",
+            sectores: obraActual.sectores || []
+        }];
+
+    } else {
+
+        obras = [{
+            id: generarId(),
+            nombre: "Sin nombre",
+            sectores: []
+        }];
+
+    }
+
+    localStorage.setItem(
+        "calculobra_obras",
+        JSON.stringify(obras)
+    );
+}
+
+let obraSeleccionadaId = obras[0].id;
+
+let obra = obras.find(
+    o => o.id === obraSeleccionadaId
+);
 
 let sectorSeleccionadoId =
-    obra.sectores.length > 0 ? obra.sectores[0].id : null;
+    obra.sectores.length > 0
+        ? obra.sectores[0].id
+        : null;
 
 let rubroSeleccionadoId = null;
 
