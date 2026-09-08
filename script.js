@@ -2324,4 +2324,5 @@ function mostrarResultadoMamposteria(modulo, superficie) {
 
 renderSectores();
 renderRubros();
-renderDetalle(); 
+renderDetalle();
+renderObras();
