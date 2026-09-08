@@ -341,6 +341,57 @@ function renderSectores() {
 
 }
 
+function renderObras() {
+
+    const contObras = document.getElementById("obras");
+
+    contObras.innerHTML = "";
+
+    obras.forEach(o => {
+
+        const div = document.createElement("div");
+
+        div.textContent = o.nombre;
+
+        div.style.padding = "12px";
+        div.style.cursor = "pointer";
+        div.style.borderRadius = "8px";
+        div.style.marginBottom = "6px";
+
+        if (o.id === obraSeleccionadaId) {
+            div.style.background = "#eef5ff";
+            div.style.fontWeight = "600";
+        }
+
+        div.onclick = () => {
+
+            obraSeleccionadaId = o.id;
+
+            obra = obras.find(
+                obraItem => obraItem.id === obraSeleccionadaId
+            );
+
+            sectorSeleccionadoId =
+                obra.sectores.length > 0
+                    ? obra.sectores[0].id
+                    : null;
+
+            rubroSeleccionadoId = null;
+
+            nombreObra.textContent =
+                obra.nombre || "Sin nombre";
+
+            renderObras();
+            renderSectores();
+            renderRubros();
+            renderDetalle();
+        };
+
+        contObras.appendChild(div);
+
+    });
+}
+
 function renderRubros() {
 
     const sector = obtenerSector(sectorSeleccionadoId);
