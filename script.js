@@ -76,6 +76,7 @@ const listaCatalogo = document.getElementById("listaCatalogo");
 const buscarRubro = document.getElementById("buscarRubro");
 
 document.getElementById("nuevoSector").addEventListener("click", crearSector);
+document.getElementById("nuevaObra").addEventListener("click", crearObra);
 document.getElementById("agregarRubro").addEventListener("click", abrirCatalogo);
 document.getElementById("cerrarModal").addEventListener("click", cerrarCatalogo);
 
