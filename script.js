@@ -90,7 +90,10 @@ modal.addEventListener("click", (e) => {
 });
 
 function guardarObra() {
-    localStorage.setItem("calculobra", JSON.stringify(obra));
+    localStorage.setItem(
+        "calculobra_obras",
+        JSON.stringify(obras)
+    );
 }
 
 function generarId() {
