@@ -393,6 +393,40 @@ function renderObras() {
     });
 }
 
+function crearObra() {
+
+    const nombre = prompt("Nombre de la nueva obra:");
+
+    if (nombre === null) return;
+
+    const nombreLimpio = nombre.trim();
+
+    if (!nombreLimpio) return;
+
+    const nuevaObra = {
+        id: generarId(),
+        nombre: nombreLimpio,
+        sectores: []
+    };
+
+    obras.push(nuevaObra);
+
+    obraSeleccionadaId = nuevaObra.id;
+    obra = nuevaObra;
+
+    sectorSeleccionadoId = null;
+    rubroSeleccionadoId = null;
+
+    guardarObra();
+
+    nombreObra.textContent = obra.nombre;
+
+    renderObras();
+    renderSectores();
+    renderRubros();
+    renderDetalle();
+}
+
 function renderRubros() {
 
     const sector = obtenerSector(sectorSeleccionadoId);
