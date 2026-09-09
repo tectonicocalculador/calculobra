@@ -466,9 +466,58 @@ estado.onclick = (e) => {
         };
 
 div.appendChild(nombre);
+
+          // BOTÓN DATOS DE LA OBRA
+        const datosObra = document.createElement("button");
+
+        datosObra.textContent = "⚙";
+        datosObra.title = "Editar datos de la obra";
+
+        datosObra.style.border = "none";
+        datosObra.style.background = "transparent";
+        datosObra.style.cursor = "pointer";
+        datosObra.style.fontSize = "17px";
+
+        datosObra.onclick = (e) => {
+
+            e.stopPropagation();
+
+            const propietario = prompt(
+                "Propietario / cliente:",
+                o.propietario || ""
+            );
+
+            if (propietario === null) return;
+
+            const contacto = prompt(
+                "Contacto del propietario:",
+                o.contactoPropietario || ""
+            );
+
+            if (contacto === null) return;
+
+            const fecha = prompt(
+                "Fecha de entrega:",
+                o.fechaEntrega || ""
+            );
+
+            if (fecha === null) return;
+
+            o.propietario = propietario.trim();
+            o.contactoPropietario = contacto.trim();
+            o.fechaEntrega = fecha.trim();
+
+            guardarObra();
+
+            renderObras();
+        };
+
+        
 div.appendChild(estado);
+div.appendChild(datosObra);
 div.appendChild(editar);
 
+      
         // SELECCIONAR OBRA
         div.onclick = () => {
 
