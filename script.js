@@ -2531,9 +2531,9 @@ function generarEncabezadoPDF(obra) {
     return `
         <div class="membrete">
 
-            <div class="tectonico">
-                .TECTONICO
-            </div>
+<div class="tectonico">
+    <img src="Logo estudio tectonico.jpg" alt="TECTONICO">
+</div>
 
             <div class="contacto">
                 Contacto: 3464 560200<br>
@@ -2603,11 +2603,11 @@ function exportarPDF() {
                     border-bottom: 1px solid #222;
                 }
 
-                .tectonico {
-                    font-size: 30px;
-                    font-weight: bold;
-                    letter-spacing: 3px;
-                }
+.tectonico img {
+    width: 190px;
+    height: auto;
+    display: block;
+}
 
                 .contacto {
                     text-align: right;
