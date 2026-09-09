@@ -365,10 +365,51 @@ function renderObras() {
             div.style.fontWeight = "600";
         }
 
-        // NOMBRE DE LA OBRA
-        const nombre = document.createElement("span");
+// NOMBRE DE LA OBRA
+const nombre = document.createElement("span");
 
-        nombre.textContent = o.nombre || "Sin nombre";
+nombre.textContent = o.nombre || "Sin nombre";
+
+// ESTADO DE LA OBRA
+const estado = document.createElement("button");
+
+estado.textContent = o.estado || "En curso";
+estado.title = "Cambiar estado de la obra";
+
+estado.style.border = "none";
+estado.style.background = "#eef5ff";
+estado.style.borderRadius = "6px";
+estado.style.padding = "4px 8px";
+estado.style.cursor = "pointer";
+estado.style.fontSize = "12px";
+estado.style.marginLeft = "8px";
+
+estado.onclick = (e) => {
+
+    e.stopPropagation();
+
+    const nuevoEstado = prompt(
+        "Estado de la obra:\n\n1 - 🟢 En curso\n2 - 🟡 Pendiente\n3 - 🔴 Detenida",
+        o.estado || "En curso"
+    );
+
+    if (nuevoEstado === null) return;
+
+    if (
+        nuevoEstado !== "En curso" &&
+        nuevoEstado !== "Pendiente" &&
+        nuevoEstado !== "Detenida"
+    ) {
+        alert("Escribí exactamente: En curso, Pendiente o Detenida.");
+        return;
+    }
+
+    o.estado = nuevoEstado;
+
+    guardarObra();
+
+    renderObras();
+};
 
         // BOTÓN EDITAR
         const editar = document.createElement("button");
@@ -409,8 +450,9 @@ function renderObras() {
             renderObras();
         };
 
-        div.appendChild(nombre);
-        div.appendChild(editar);
+div.appendChild(nombre);
+div.appendChild(estado);
+div.appendChild(editar);
 
         // SELECCIONAR OBRA
         div.onclick = () => {
