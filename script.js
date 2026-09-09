@@ -2597,7 +2597,7 @@ function exportarPDF() {
                 .membrete {
                     display: flex;
                     justify-content: space-between;
-                    align-items: flex-start;
+                    align-items: center;
                     padding-bottom: 18px;
                     margin-bottom: 25px;
                     border-bottom: 1px solid #222;
