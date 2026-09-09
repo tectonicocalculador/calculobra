@@ -509,10 +509,13 @@ function crearObra() {
 
     if (!nombreLimpio) return;
 
-   const nuevaObra = {
+const nuevaObra = {
     id: generarId(),
     nombre: nombreLimpio,
     estado: "En curso",
+    propietario: "",
+    contactoPropietario: "",
+    fechaEntrega: "",
     sectores: []
 };
 
