@@ -452,11 +452,12 @@ function crearObra() {
 
     if (!nombreLimpio) return;
 
-    const nuevaObra = {
-        id: generarId(),
-        nombre: nombreLimpio,
-        sectores: []
-    };
+   const nuevaObra = {
+    id: generarId(),
+    nombre: nombreLimpio,
+    estado: "En curso",
+    sectores: []
+};
 
     obras.push(nuevaObra);
 
