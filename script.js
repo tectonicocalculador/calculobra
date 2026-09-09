@@ -2527,6 +2527,16 @@ renderObras();
 
 document.getElementById("exportarPDF").onclick = exportarPDF;
 
+function generarEncabezadoPDF(obra) {
+    return `
+        <h1>${obra.nombre || "Sin nombre"}</h1>
+
+        <div class="estado">
+            Estado: ${obra.estado || "En curso"}
+        </div>
+    `;
+}
+
 function exportarPDF() {
 
     let html = `
