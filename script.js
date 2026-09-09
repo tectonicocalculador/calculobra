@@ -352,8 +352,9 @@ function renderObras() {
 
         const div = document.createElement("div");
 
-        div.textContent = o.nombre;
-
+        div.style.display = "flex";
+        div.style.alignItems = "center";
+        div.style.justifyContent = "space-between";
         div.style.padding = "12px";
         div.style.cursor = "pointer";
         div.style.borderRadius = "8px";
@@ -364,6 +365,54 @@ function renderObras() {
             div.style.fontWeight = "600";
         }
 
+        // NOMBRE DE LA OBRA
+        const nombre = document.createElement("span");
+
+        nombre.textContent = o.nombre || "Sin nombre";
+
+        // BOTÓN EDITAR
+        const editar = document.createElement("button");
+
+        editar.textContent = "✎";
+        editar.title = "Editar nombre de la obra";
+
+        editar.style.border = "none";
+        editar.style.background = "transparent";
+        editar.style.cursor = "pointer";
+        editar.style.fontSize = "18px";
+
+        editar.onclick = (e) => {
+
+            e.stopPropagation();
+
+            const nuevoNombre = prompt(
+                "Nombre de la obra:",
+                o.nombre || ""
+            );
+
+            if (nuevoNombre === null) return;
+
+            const nombreLimpio = nuevoNombre.trim();
+
+            if (!nombreLimpio) return;
+
+            o.nombre = nombreLimpio;
+
+            guardarObra();
+
+            // Si estamos editando la obra seleccionada,
+            // actualizar también el nombre de arriba.
+            if (o.id === obraSeleccionadaId) {
+                nombreObra.textContent = o.nombre;
+            }
+
+            renderObras();
+        };
+
+        div.appendChild(nombre);
+        div.appendChild(editar);
+
+        // SELECCIONAR OBRA
         div.onclick = () => {
 
             obraSeleccionadaId = o.id;
