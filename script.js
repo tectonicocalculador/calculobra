@@ -2586,10 +2586,56 @@ function exportarPDF() {
 
             <style>
 
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 40px;
+                          body {
+                    font-family: Arial, Helvetica, sans-serif;
+                    margin: 0;
+                    padding: 0;
                     color: #222;
+                    background: white;
+                }
+
+                .membrete {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding-bottom: 18px;
+                    margin-bottom: 25px;
+                    border-bottom: 1px solid #222;
+                }
+
+                .tectonico {
+                    font-size: 30px;
+                    font-weight: bold;
+                    letter-spacing: 3px;
+                }
+
+                .contacto {
+                    text-align: right;
+                    font-size: 10px;
+                    line-height: 1.5;
+                }
+
+                .titulo-informe {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin: 25px 0 20px 0;
+                }
+
+                .datos-obra {
+                    border: 1px solid #ccc;
+                    padding: 15px;
+                    margin-bottom: 30px;
+                }
+
+                .datos-obra .nombre {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 12px;
+                }
+
+                .datos-obra .dato {
+                    font-size: 11px;
+                    margin: 5px 0;
                 }
 
                 h1 {
@@ -2598,13 +2644,16 @@ function exportarPDF() {
 
                 h2 {
                     margin-top: 30px;
+                    margin-bottom: 15px;
+                    padding-bottom: 7px;
                     border-bottom: 2px solid #222;
-                    padding-bottom: 8px;
+                    font-size: 17px;
                 }
 
                 h3 {
-                    margin-top: 20px;
+                    margin-top: 18px;
                     margin-bottom: 8px;
+                    font-size: 14px;
                 }
 
                 .estado {
@@ -2620,7 +2669,8 @@ function exportarPDF() {
                 .material {
                     display: flex;
                     justify-content: space-between;
-                    padding: 6px 0;
+                    padding: 5px 0;
+                    font-size: 11px;
                 }
 
                 .acumulado {
@@ -2630,6 +2680,19 @@ function exportarPDF() {
                 }
 
                 @media print {
+                    body {
+                        margin: 20mm;
+                    }
+
+                    .membrete,
+                    .datos-obra,
+                    .rubro,
+                    .acumulado {
+                        break-inside: avoid;
+                    }
+                }     
+               
+               {
                     body {
                         margin: 20px;
                     }
