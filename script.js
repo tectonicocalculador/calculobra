@@ -377,13 +377,28 @@ estado.textContent = o.estado || "En curso";
 estado.title = "Cambiar estado de la obra";
 
 estado.style.border = "none";
-estado.style.background = "#eef5ff";
-estado.style.borderRadius = "6px";
-estado.style.padding = "4px 8px";
+estado.style.borderRadius = "8px";
+estado.style.padding = "5px 10px";
 estado.style.cursor = "pointer";
 estado.style.fontSize = "12px";
+estado.style.fontWeight = "600";
 estado.style.marginLeft = "8px";
 
+if (o.estado === "Pendiente") {
+    estado.style.background = "#fff0c2";
+    estado.style.color = "#9a6700";
+}
+
+else if (o.estado === "Detenida") {
+    estado.style.background = "#ffd6d9";
+    estado.style.color = "#b42318";
+}
+
+else {
+    estado.style.background = "#d1fae5";
+    estado.style.color = "#087443";
+}
+        
 estado.onclick = (e) => {
 
     e.stopPropagation();
