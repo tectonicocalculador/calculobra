@@ -2468,3 +2468,444 @@ renderSectores();
 renderRubros();
 renderDetalle();
 renderObras();
+
+// =====================================================
+// EXPORTAR RESUMEN DE OBRA A PDF
+// =====================================================
+
+document.getElementById("exportarPDF").onclick = exportarPDF;
+
+function exportarPDF() {
+
+    let html = `
+        <html>
+        <head>
+            <title>${obra.nombre || "Obra"}</title>
+
+            <style>
+
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 40px;
+                    color: #222;
+                }
+
+                h1 {
+                    margin-bottom: 5px;
+                }
+
+                h2 {
+                    margin-top: 30px;
+                    border-bottom: 2px solid #222;
+                    padding-bottom: 8px;
+                }
+
+                h3 {
+                    margin-top: 20px;
+                    margin-bottom: 8px;
+                }
+
+                .estado {
+                    margin-bottom: 25px;
+                }
+
+                .rubro {
+                    margin-bottom: 20px;
+                    padding-bottom: 12px;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                .material {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 6px 0;
+                }
+
+                .acumulado {
+                    margin-top: 35px;
+                    border-top: 2px solid #222;
+                    padding-top: 15px;
+                }
+
+                @media print {
+                    body {
+                        margin: 20px;
+                    }
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <h1>${obra.nombre || "Sin nombre"}</h1>
+
+            <div class="estado">
+                Estado: ${obra.estado || "En curso"}
+            </div>
+    `;
+
+    // =====================================================
+    // SECTORES Y RUBROS
+    // =====================================================
+
+    obra.sectores.forEach(sector => {
+
+        html += `
+            <h2>${sector.nombre}</h2>
+        `;
+
+        sector.rubros.forEach(rubro => {
+
+            html += `
+                <div class="rubro">
+
+                    <h3>${rubro.tipo}</h3>
+            `;
+
+            if (rubro.descripcion) {
+
+                html += `
+                    <p>${rubro.descripcion}</p>
+                `;
+            }
+
+            let cantidadBase = null;
+            let unidadBase = "";
+
+            if (
+                rubro.datos &&
+                rubro.datos.superficie !== undefined
+            ) {
+
+                cantidadBase = parseFloat(
+                    String(rubro.datos.superficie).replace(",", ".")
+                );
+
+                unidadBase = "m²";
+            }
+
+            else if (
+                rubro.datos &&
+                rubro.datos.volumen !== undefined
+            ) {
+
+                cantidadBase = parseFloat(
+                    String(rubro.datos.volumen).replace(",", ".")
+                );
+
+                unidadBase = "m³";
+            }
+
+            if (
+                cantidadBase &&
+                cantidadBase > 0
+            ) {
+
+                html += `
+                    <p>
+                        Cantidad: ${cantidadBase} ${unidadBase}
+                    </p>
+                `;
+
+            } else {
+
+                html += `
+                    <p>
+                        Sin cantidad cargada.
+                    </p>
+                `;
+            }
+
+            // =============================================
+            // MATERIALES DEL RUBRO
+            // =============================================
+
+            let modulos = [];
+
+            if (rubro.calculadora === "mamposteria") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "mamposterias"
+                );
+
+            }
+
+            else if (
+                rubro.calculadora === "revoque_grueso" ||
+                rubro.calculadora === "revoque_fino" ||
+                rubro.calculadora === "azotado_hidrofugo"
+            ) {
+
+                modulos = baseCalculos.filter(
+                    modulo =>
+                        modulo.categoria === "revoques" &&
+                        modulo.tipoRevoque === rubro.calculadora
+                );
+
+            }
+
+            else if (rubro.calculadora === "carpeta") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "carpetas"
+                );
+
+            }
+
+            else if (rubro.calculadora === "mortero_pisos") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "morteros_pisos"
+                );
+
+            }
+
+            else if (rubro.calculadora === "cimientos") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "cimientos"
+                );
+
+            }
+
+            else if (rubro.calculadora === "contrapiso") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "contrapisos"
+                );
+
+            }
+
+            else if (rubro.calculadora === "hormigon") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.id === "hormigon_armado"
+                );
+
+            }
+
+            const modulo = modulos.find(
+                modulo => modulo.id === rubro.moduloCalculo
+            ) || modulos[0];
+
+            if (
+                modulo &&
+                cantidadBase &&
+                cantidadBase > 0
+            ) {
+
+                html += `
+                    <strong>Materiales:</strong>
+                `;
+
+                modulo.materiales.forEach(material => {
+
+                    if (material.unidad === "manual") return;
+
+                    const cantidad =
+                        material.cantidadPorUnidad *
+                        cantidadBase;
+
+                    html += `
+                        <div class="material">
+
+                            <span>
+                                ${material.nombre}
+                            </span>
+
+                            <span>
+                                ${cantidad.toFixed(2)}
+                                ${material.unidad}
+                            </span>
+
+                        </div>
+                    `;
+                });
+            }
+
+            html += `
+                </div>
+            `;
+
+        });
+
+    });
+
+    // =====================================================
+    // ACUMULADO GENERAL
+    // =====================================================
+
+    const acumulado = {};
+
+    obra.sectores.forEach(sector => {
+
+        sector.rubros.forEach(rubro => {
+
+            let cantidadBase = null;
+            let modulos = [];
+
+            if (
+                rubro.datos &&
+                rubro.datos.superficie !== undefined
+            ) {
+
+                cantidadBase = parseFloat(
+                    String(rubro.datos.superficie).replace(",", ".")
+                );
+
+            }
+
+            else if (
+                rubro.datos &&
+                rubro.datos.volumen !== undefined
+            ) {
+
+                cantidadBase = parseFloat(
+                    String(rubro.datos.volumen).replace(",", ".")
+                );
+            }
+
+            if (!cantidadBase || cantidadBase <= 0) return;
+
+            if (rubro.calculadora === "mamposteria") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "mamposterias"
+                );
+
+            }
+
+            else if (
+                rubro.calculadora === "revoque_grueso" ||
+                rubro.calculadora === "revoque_fino" ||
+                rubro.calculadora === "azotado_hidrofugo"
+            ) {
+
+                modulos = baseCalculos.filter(
+                    modulo =>
+                        modulo.categoria === "revoques" &&
+                        modulo.tipoRevoque === rubro.calculadora
+                );
+
+            }
+
+            else if (rubro.calculadora === "carpeta") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "carpetas"
+                );
+
+            }
+
+            else if (rubro.calculadora === "mortero_pisos") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "morteros_pisos"
+                );
+
+            }
+
+            else if (rubro.calculadora === "cimientos") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "cimientos"
+                );
+
+            }
+
+            else if (rubro.calculadora === "contrapiso") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.categoria === "contrapisos"
+                );
+
+            }
+
+            else if (rubro.calculadora === "hormigon") {
+
+                modulos = baseCalculos.filter(
+                    modulo => modulo.id === "hormigon_armado"
+                );
+            }
+
+            const modulo = modulos.find(
+                modulo => modulo.id === rubro.moduloCalculo
+            ) || modulos[0];
+
+            if (!modulo) return;
+
+            modulo.materiales.forEach(material => {
+
+                if (material.unidad === "manual") return;
+
+                const cantidad =
+                    material.cantidadPorUnidad *
+                    cantidadBase;
+
+                if (!acumulado[material.nombre]) {
+
+                    acumulado[material.nombre] = {
+                        cantidad: 0,
+                        unidad: material.unidad
+                    };
+                }
+
+                acumulado[material.nombre].cantidad += cantidad;
+
+            });
+
+        });
+
+    });
+
+    html += `
+        <div class="acumulado">
+
+            <h2>ACUMULADO DE MATERIALES</h2>
+    `;
+
+    Object.entries(acumulado).forEach(
+        ([nombre, datos]) => {
+
+            html += `
+                <div class="material">
+
+                    <strong>
+                        ${nombre}
+                    </strong>
+
+                    <span>
+                        ${datos.cantidad.toFixed(2)}
+                        ${datos.unidad}
+                    </span>
+
+                </div>
+            `;
+        }
+    );
+
+    html += `
+        </div>
+
+        </body>
+        </html>
+    `;
+
+    const ventana = window.open(
+        "",
+        "_blank"
+    );
+
+    ventana.document.write(html);
+    ventana.document.close();
+
+    ventana.focus();
+
+    setTimeout(() => {
+
+        ventana.print();
+
+    }, 500);
+}
