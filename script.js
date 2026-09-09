@@ -2529,10 +2529,50 @@ document.getElementById("exportarPDF").onclick = exportarPDF;
 
 function generarEncabezadoPDF(obra) {
     return `
-        <h1>${obra.nombre || "Sin nombre"}</h1>
+        <div class="membrete">
 
-        <div class="estado">
-            Estado: ${obra.estado || "En curso"}
+            <div class="tectonico">
+                .TECTONICO
+            </div>
+
+            <div class="contacto">
+                Contacto: 3464 560200<br>
+                Correo: estebangonzalezlaugas@gmail.com<br>
+                Redes: @estudio.tectonico (Instagram)
+            </div>
+
+        </div>
+
+        <div class="titulo-informe">
+            Presupuesto de materiales según etapas de obra
+        </div>
+
+        <div class="datos-obra">
+
+            <div class="nombre">
+                ${obra.nombre || "Sin nombre"}
+            </div>
+
+            <div class="dato">
+                <strong>Propietario / cliente:</strong>
+                ${obra.propietario || "—"}
+            </div>
+
+            <div class="dato">
+                <strong>Contacto:</strong>
+                ${obra.contactoPropietario || "—"}
+            </div>
+
+            <div class="dato">
+                <strong>Estado de la obra:</strong>
+                ${obra.estado || "En curso"}
+            </div>
+
+            <div class="dato">
+                <strong>Fecha de entrega:</strong>
+                ${obra.fechaEntrega || "—"}
+            </div>
+
         </div>
     `;
 }
@@ -2599,56 +2639,11 @@ function exportarPDF() {
 
         </head>
 
-     <body>
+        <body>
 
-    <div class="membrete">
-
-        <div class="tectonico">
-            .TECTONICO
-        </div>
-
-        <div class="contacto">
-            Contacto: 3464 560200<br>
-            Correo: estebangonzalezlaugas@gmail.com<br>
-            Redes: @estudio.tectonico (Instagram)
-        </div>
-
-    </div>
-
-    <div class="titulo-informe">
-        Presupuesto de materiales según etapas de obra
-    </div>
-
-    <div class="datos-obra">
-
-        <div class="nombre">
-            ${obra.nombre || "Sin nombre"}
-        </div>
-
-        <div class="dato">
-            <strong>Propietario / cliente:</strong>
-            ${obra.propietario || "—"}
-        </div>
-
-        <div class="dato">
-            <strong>Contacto:</strong>
-            ${obra.contactoPropietario || "—"}
-        </div>
-
-        <div class="dato">
-            <strong>Estado de la obra:</strong>
-            ${obra.estado || "En curso"}
-        </div>
-
-        <div class="dato">
-            <strong>Fecha de entrega:</strong>
-            ${obra.fechaEntrega || "—"}
-        </div>
-
-    </div>
-
-`;  
-
+    ${generarEncabezadoPDF(obra)}
+`;
+    
     // =====================================================
     // SECTORES Y RUBROS
     // =====================================================
