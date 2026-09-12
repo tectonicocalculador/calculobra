@@ -956,9 +956,14 @@ if (
                                                             </span>
 
                                                             <span>
-                                                                ${cantidad.toFixed(2)}
-                                                                ${material.unidad}
-                                                            </span>
+    ${cantidad.toFixed(2)}
+    ${material.unidad}
+    ${
+        material.unidad === "kg"
+            ? ` (${(cantidad / 50).toFixed(2)} bolsas)`
+            : ""
+    }
+</span>
 
                                                         </div>
                                                     `;
