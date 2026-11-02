@@ -346,31 +346,32 @@ const baseCalculos = [
         ]
     },
 
-    {
-        id: "retak_portante_20cm",
-        categoria: "mamposterias",
-        nombre: "Retak portante 20cm - 20x25x50 - junta de 2mm",
-        unidad: "m2",
+    
+{
+    id: "retak_portante_20cm",
+    categoria: "mamposterias",
+    nombre: "Retak portante 20cm - 20x25x50 - junta de 2mm",
+    unidad: "m2",
 
-        materiales: [
-            {
-                nombre: "cemento tector",
-                datoEntradaPorUnidad: 1,
-                cantidadPorUnidad: 4.7,
-                unidad: "kg",
-                resultadoPorUnidad: 0.188,
-                unidadCompra: "bolsa de 25kg"
-            },
-            {
-                nombre: "ladrillo de 20x25x50",
-                datoEntradaPorUnidad: 1,
-                cantidadPorUnidad: 8,
-                unidad: "unidades",
-                resultadoPorUnidad: 8,
-                unidadCompra: "unidades"
-            }
-        ]
-    },
+    materiales: [
+        {
+            nombre: "cemento tector",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 6.25,
+            unidad: "kg",
+            resultadoPorUnidad: 0.25,
+            unidadCompra: "bolsa de 25kg"
+        },
+        {
+            nombre: "ladrillo de 20x25x50",
+            datoEntradaPorUnidad: 1,
+            cantidadPorUnidad: 8,
+            unidad: "unidades",
+            resultadoPorUnidad: 8,
+            unidadCompra: "unidades"
+        }
+    ]
+},
 
     {
         id: "retak_10cm",
